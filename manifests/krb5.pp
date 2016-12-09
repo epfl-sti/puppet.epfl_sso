@@ -82,9 +82,9 @@ class epfl_sso::krb5(
     content => template("epfl_sso/nfs-common.erb")
   }
 
-  service { 'rpcbind.service': ensure => stoppes }
+  service { 'rpcbind.service': ensure => stopped }
 
-  service { 'rpcbind.socket': ensure => stoppes }
+  service { 'rpcbind.socket': ensure => stopped }
 
   service { 'rpc-gssd.service': 
         ensure => running,
