@@ -74,6 +74,14 @@ class epfl_sso::krb5(
     content => template("epfl_sso/krb5.conf.erb")
   }
 
+  file { "/etc/idmapd.conf":
+    content => template("epfl_sso/idmapd.conf.erb")
+  }
+
+  file { "/etc/default/nfs-common":
+    content => template("epfl_sso/nfs-common.erb")
+  }
+
   case $::osfamily {
     'RedHat': {
         $pam_classes = {

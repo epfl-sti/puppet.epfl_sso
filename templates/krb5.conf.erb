@@ -1,26 +1,24 @@
-[Logging]
+[logging]
 default = FILE:/var/log/krb5libs.log
 kdc = FILE:/var/log/krb5kdc.log
 admin_server = FILE:/var/log/kadmind.log
 
 [libdefaults]
 default_realm = INTRANET.EPFL.CH
-dns_lookup_realm = false
-dns_lookup_kdc = false
+dns_lookup_realm = true
+dns_lookup_kdc = true
 ticket_lifetime = 24h
 forwardable = yes
 default_keytab_name = FILE:/etc/krb5.keytab
 
 [realms]
 INTRANET.EPFL.CH = {
-kdc = intranet.epfl.ch:88
-admin_server = intranet.epfl.ch:749
-default_domain = intranet.epfl.ch
+kdc = ad1.epfl.ch
 }
 
 [domain_realm]
-.intranet.epfl.ch = INTRANET.EPFL.CH
 intranet.epfl.ch = INTRANET.EPFL.CH
+.intranet.epfl.ch = INTRANET.EPFL.CH
 
 [appdefaults]
 pam = {
@@ -30,3 +28,4 @@ renew_lifetime = 36000
 forwardable = true
 krb4_convert = false
 }
+
