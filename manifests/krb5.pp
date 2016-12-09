@@ -88,7 +88,7 @@ class epfl_sso::krb5(
 
   service { 'rpc-gssd.service': 
         ensure => running,
-        enable=true
+        enable => true
    }
   
 
