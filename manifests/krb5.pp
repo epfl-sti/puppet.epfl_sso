@@ -86,7 +86,7 @@ class epfl_sso::krb5(
 
   service { 'rpcbind.socket': ensure => stopped }
 
-  service { 'rpc-gssd.service': 
+  service { 'rpc-gssd': 
         ensure => running,
         enable => true
    }
