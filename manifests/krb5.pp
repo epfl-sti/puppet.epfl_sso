@@ -82,6 +82,17 @@ class epfl_sso::krb5(
     content => template("epfl_sso/nfs-common.erb")
   }
 
+  service { 'rpcbind.service': ensure => stoppes }
+
+  service { 'rpcbind.socket': ensure => stoppes }
+
+  service { 'rpc-gssd.service': 
+        ensure => running,
+        enable=true
+   }
+  
+
+
   case $::osfamily {
     'RedHat': {
         $pam_classes = {
