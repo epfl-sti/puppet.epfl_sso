@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if which msktutil; then
+   echo -n msktutil_version=; msktutil --version|sed 's/msktutil version /g'
+else
+   echo msktutil_version=not_installed
+fi
