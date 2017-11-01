@@ -1,38 +1,19 @@
 {
   "name": "epflsti/epfl_sso",
-  "version": "0.4.10",
+  "version": "0.4.12",
   "author": "stiitops@groupes.epfl.ch",
   "summary": "UNIX single sign-on using EPFL's LDAP and Kerberos servers",
   "license": "MIT",
   "source": "https://github.com/epfl-sti/puppet.epfl_sso",
-  "issues_url": "https://github.com/epfl-sti/puppet.epfl_sso/issues",
   "project_page": "https://github.com/epfl-sti/puppet.epfl_sso",
+  "issues_url": "https://github.com/epfl-sti/puppet.epfl_sso/issues",
   "dependencies": [
-    {
-        "name": "puppetlabs/ntp",
-        "version_requirement": ">=4.2.0",
-        "__4x_version_requirement": ">5.0.0",
-        "__comment": "See https://github.com/epfl-sti/puppet.quirks/blob/master/manifests/init.pp#L40"
-    },
-    {
-        "name":"puppetlabs/stdlib",
-        "version_requirement":">=4.14.0"
-    },
-    {
-        "name":"puppetlabs/inifile",
-        "version_requirement":">=1.6.0"
-    },
-    {
-      "name": "stm/debconf",
-      "version_requirement": ">=2.0.0"
-    },
-    {
-      "name": "wcooley/name_service",
-      "version_requirement": ">=0.1.0"
-    },
-    {
-      "name": "epflsti/quirks",
-      "version_requirement": ">=0.1.0"
-    }
-  ]
+    {"name":"puppetlabs/ntp","version_requirement":">=4.2.0"},
+    {"name":"puppetlabs/stdlib","version_requirement":">=4.14.0"},
+    {"name":"puppetlabs/inifile","version_requirement":">=1.6.0"},
+    {"name":"stm/debconf","version_requirement":">=2.0.0"},
+    {"name":"wcooley/name_service","version_requirement":">=0.1.0"},
+    {"name":"epflsti/quirks","version_requirement":">=0.1.0"}
+  ],
+  "data_provider": null
 }

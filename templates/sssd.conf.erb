@@ -7,7 +7,7 @@
 
 [sssd]
 config_file_version = 2
-domains = intranet.epfl.ch
+domains = <%= @realm %>
 services = nss, pam
 <%= @debug_sssd ? "debug_level = 9" : "" %>
 
@@ -17,7 +17,7 @@ services = nss, pam
 [pam]
 <%= @debug_sssd ? "debug_level = 9" : "" %>
 
-[domain/intranet.epfl.ch]
+[domain/<%= @realm.downcase %>]
 <%= @debug_sssd ? "debug_level = 9" : "" %>
 
 ldap_referrals = false
@@ -35,10 +35,12 @@ ldap_uri = ldap://<%= @ad_server %>/
 ldap_sasl_mech = gssapi
 ldap_schema = ad
 ldap_account_expire_policy = ad
+<%- if ! @use_test_ad -%>
 ldap_user_search_base = DC=intranet,DC=epfl,DC=ch
 ldap_group_search_base = OU=AppGroups,DC=intranet,DC=epfl,DC=ch???OU=UnitGroups,DC=intranet,DC=epfl,DC=ch??
-ldap_force_upper_case_realm = true
 ldap_use_tokengroups = false
+<%- end -%>
+ldap_force_upper_case_realm = true
 
 <% else %>
 
@@ -55,8 +57,8 @@ ldap_access_filter = (objectclass=person)
 
 ldap_force_upper_case_realm = true
 
-krb5_realm = INTRANET.EPFL.CH
-krb5_server = intranet.epfl.ch
+krb5_realm = <%= @realm.upcase %>
+krb5_server = <%= @realm.downcase %>
 
 # Probably required with sssd 1.8.x and newer
 krb5_canonicalize = false

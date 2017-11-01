@@ -33,6 +33,8 @@
 #
 # $ad_server::   The Active Directory server to use
 #
+# $realm::       
+#
 # $epflca_cert_url:: Where to find the certificate for the EPFL CA
 #                (necessary for ldapsearch to work)
 #
@@ -62,14 +64,15 @@
 
 class epfl_sso::private::ad(
   $ad_server,
+  $realm,
+  $use_test_ad,
   $join_domain,
   $epflca_cert_url = 'http://certauth.epfl.ch/epflca.cer',
   $renew_domain_credentials = true
 ) inherits epfl_sso::private::params {
-  if ($::epfl_krb5_resolved == "false") {
+  if ($::epfl_krb5_resolved == "false" and $::epfl_test_krb5_resolved == "false") {
     fail("Unable to resolve KDC in DNS - You must use the EPFL DNS servers.")
   }
-
   if ($::fqdn !~ /[.]/) {
     fail("Your FQDN isn't (${::fqdn}) - Refusing to create bogus AD entry")
   }
@@ -78,18 +81,23 @@ class epfl_sso::private::ad(
   # reverse DNS are in for a surprise for some of the hosts... Among which,
   # the AD servers themselves :(
   define etchosts_line($ip) {
-    host { "${title}.intranet.epfl.ch":
+    host { "${title}.${::epfl_sso::private::ad::realm}":
       host_aliases => $title,
       ip => $ip,
       ensure => "present"
     }
   }
-  epfl_sso::private::ad::etchosts_line { "ad1": ip => "128.178.15.227" }
-  epfl_sso::private::ad::etchosts_line { "ad2": ip => "128.178.15.228" }
-  epfl_sso::private::ad::etchosts_line { "ad3": ip => "128.178.15.229" }
-  epfl_sso::private::ad::etchosts_line { "ad4": ip => "128.178.15.230" }
-  epfl_sso::private::ad::etchosts_line { "ad5": ip => "128.178.15.231" }
-  epfl_sso::private::ad::etchosts_line { "ad6": ip => "128.178.15.232" }
+
+  if ($use_test_ad) {
+    epfl_sso::private::ad::etchosts_line { "idevingtladdc2": ip => "128.178.109.26" }
+  } else {
+    epfl_sso::private::ad::etchosts_line { "ad1": ip => "128.178.15.227" }
+    epfl_sso::private::ad::etchosts_line { "ad2": ip => "128.178.15.228" }
+    epfl_sso::private::ad::etchosts_line { "ad3": ip => "128.178.15.229" }
+    epfl_sso::private::ad::etchosts_line { "ad4": ip => "128.178.15.230" }
+    epfl_sso::private::ad::etchosts_line { "ad5": ip => "128.178.15.231" }
+    epfl_sso::private::ad::etchosts_line { "ad6": ip => "128.178.15.232" }
+  }
 
   include epfl_sso::private::ldap
   epfl_sso::private::ldap::trusted_ca_cert { 'epfl':
@@ -139,8 +147,19 @@ class epfl_sso::private::ad(
 
       if ($join_domain) {
         ensure_packages("msktutil")
-        $_msktutil_create_command = inline_template('msktutil --verbose -c --server <%= @ad_server %> -b "<%= @join_domain %>" --no-reverse-lookups --enctypes 24 --computer-name <%= @hostname.upcase %> --service host/<%= @fqdn.downcase %>')
-        $_msktutil_renew_command = inline_template('msktutil --verbose --auto-update --enctypes 24 --computer-name <%= @hostname.upcase %>')
+        case $::msktutil_version {
+          "0.5.2", "not_installed", undef: {
+            # Le sigh. https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820579
+            # undef and "not_installed" are abundance-of-caution cases, if we
+            # are just installing it now or if the fact is not working.
+            $_msktutil_verbose = ""
+          }
+          default: {
+            $_msktutil_verbose = "--verbose"
+          }
+        }
+        $_msktutil_create_command = inline_template("msktutil ${_msktutil_verbose} -c --server <%= @ad_server %> -b '<%= @join_domain %>' --no-reverse-lookups --enctypes 24 --computer-name <%= @hostname.upcase %> --service host/<%= @fqdn.downcase %>")
+        $_msktutil_renew_command = inline_template("msktutil ${_msktutil_verbose} --auto-update --enctypes 24 --computer-name <%= @hostname.upcase %>")
         exec { $_msktutil_create_command:
           path => $::path,
           command => "/bin/echo 'mkstutil -c failed - Please run kinit <ADSciper or \"itvdi-ad-YOURSCHOOL\"> first'; false",
