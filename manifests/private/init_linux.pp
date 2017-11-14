@@ -79,6 +79,9 @@ class epfl_sso::private::init_linux(
     class { 'epfl_sso::private::mkhomedir': }
   }
 
+  # TODO: This should be guarded by $enable_nfs_automounts or something
+  class { 'epfl_sso::private::nfs_automounts': }
+
   epfl_sso::private::pam::module { "winbind":
     ensure => "absent"
   }
