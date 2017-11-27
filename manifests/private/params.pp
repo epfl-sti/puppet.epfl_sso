@@ -1,8 +1,8 @@
 class epfl_sso::private::params {
   $krb5_domain = "INTRANET.EPFL.CH"
-  if ($::epfl_test_krb5_resolved) {
+  if ("${::epfl_test_krb5_resolved}" == "true") {
     $ad_server = "idevingtladdc2.idevingtladf2.loc"
-  } elsif ($::epfl_krb5_resolved) {
+  } elsif ("${::epfl_krb5_resolved}" == "true") {
     $ad_server = "ad3.intranet.epfl.ch"
   }
   $use_test_ad = ($ad_server =~ /idevingtladf2.loc/)
