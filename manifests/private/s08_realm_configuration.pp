@@ -22,7 +22,7 @@ fully-qualified-names = no
 # Class: epfl_sso::private::nfs_automounts
 #
 # This class makes automounting
-class epfl_sso::private::realmd_creation() {
+class epfl_sso::private::s08_realmd_configuration () {
   file { '/etc/realmd':
     ensure  => present,
     owner   => 'root',
