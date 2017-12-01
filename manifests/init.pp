@@ -68,7 +68,7 @@
 #
 # * Configure sshd for inbound Kerberos authentication (if
 #   $sshd_gssapi_auth is true, which by default it isn't)
-# 
+#
 class epfl_sso(
   $allowed_users_and_groups = undef,
   $manage_nsswitch_netgroup = true,
@@ -122,7 +122,14 @@ class epfl_sso(
         renew_domain_credentials => $renew_domain_credentials,
         sshd_gssapi_auth         => $sshd_gssapi_auth,
         debug_sssd               => $debug_sssd
+
+
+## I put my classes here - Mokhtar2107
+        class { 'epfl_sso::private::s07_install_few_packages':
+              }
+        class { 'epfl_sso::private::verify_services_status':
       }
     }
+          }
   }
 }

@@ -11,6 +11,8 @@ class epfl_sso::private::params {
     false => "intranet.epfl.ch"
   }
 
+# We will add a varable here to concatenate fqdn  "idevingtladf2.loc"
+
   $is_puppet_apply = !(defined('$::servername') and $::servername)
 
   case "${::operatingsystem} ${::operatingsystemrelease}" {
