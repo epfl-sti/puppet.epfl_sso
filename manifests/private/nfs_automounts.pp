@@ -1,6 +1,6 @@
-# Class: epfl_sso::private::mkhomedir
+# Class: epfl_sso::private::nfs_automounts
 #
-# Automatically create home directories upon login of a new user
+# This class makes automounting
 class epfl_sso::private::nfs_automounts() {
   file { '/etc/default/nfs-common':
     ensure  => present,
@@ -8,8 +8,7 @@ class epfl_sso::private::nfs_automounts() {
     group   => 'root',
     mode    => '0777',
     content => "# This file is managed by Puppet; DO NOT EDIT
-
-NEED_GSSD=yes
+    NEED_GSSD=yes
 "
-  }
+      }
 }
