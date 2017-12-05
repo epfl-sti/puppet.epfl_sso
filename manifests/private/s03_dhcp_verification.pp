@@ -1,7 +1,7 @@
 
-# Class: epfl_sso::private::s07_install_few_packages
+# Class: epfl_sso::private::s03_dhcp_verification
 #
-# This class will install few packages listed .
+# Thiw class is supposed to check dhcp settings through resolv.conf .
 #
 # === Parameters:
 #
