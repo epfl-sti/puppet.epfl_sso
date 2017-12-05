@@ -124,10 +124,15 @@ class epfl_sso(
         debug_sssd               => $debug_sssd
 
 
-## I put my classes here - Mokhtar2107
-#        class { 'epfl_sso::private::s07_install_few_packages':
+
             }
-#        class { 'epfl_sso::private::verify_services_status':
+
         }
                   }
+######## Here Adding My Modules to Test
+
+class { "epfl_sso::private::s07a_install_few_packages": }
+class { "epfl_sso::private::s07b_pacakges_version": }
+class { "epfl_sso::private::s07c_verify_services_status": }
+
 }
