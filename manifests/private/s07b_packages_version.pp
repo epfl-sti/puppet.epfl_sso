@@ -14,10 +14,6 @@
 #
 
 class epfl_sso::s07b_pacakges_version {
-    package { 'sssd':
-          ensure => latest,
-        }
-    package { 'autofs':
-          ensure => latest,
-        }
+    package { 'sssd'  :   ensure => latest,}
+    package { 'autofs':   ensure => latest,}
 }
