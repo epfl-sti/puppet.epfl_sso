@@ -1,26 +1,19 @@
 
-# Class: epfl_sso::private::s07_install_few_packages
+# Class: epfl_sso::private::s04_ntp_installation
 #
-# This class will install few packages listed .
+# This class will install ntp service ,
+# also check next time if the version is latest !!!
 #
 # === Parameters:
 #
 #Depending on OS, its  version and distribution, NOT yet treated
 #
-# nfs-common,
-# autofs,
-# autofs-ldap
+#
 #
 #
 
 class epfl_sso::s04_ntp_installation {
-    package { 'nfs-common':
-          ensure => present,
-        }
-    package { 'autofs':
-          ensure => present,
-        }
-    package { 'autofs-ldap':
-          ensure => present,
-        }
+
+  package { 'ntp'  : ensure => 'installed'  }
+  package { 'ntp'  : ensure => 'latest'     }
 }
