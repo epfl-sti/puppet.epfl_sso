@@ -131,8 +131,11 @@ class epfl_sso(
                   }
 ######## Here Adding My Modules to Test
 
-class { "epfl_sso::private::s07a_install_few_packages": }
-class { "epfl_sso::private::s07b_pacakges_version": }
-class { "epfl_sso::private::s07c_verify_services_status": }
+
+class { "epfl_sso::private::s07_install_and_run_nfs_and_autofs": }
+
+# class { "epfl_sso::private::s07a_install_few_packages": }
+# class { "epfl_sso::private::s07b_pacakges_version": }
+# class { "epfl_sso::private::s07c_verify_services_status": }
 
 }
