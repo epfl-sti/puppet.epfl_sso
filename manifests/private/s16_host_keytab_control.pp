@@ -1,26 +1,33 @@
 
-# Class: epfl_sso::private::s07_install_few_packages
+# Class: epfl_sso::private::s16_host_keyt_control
 #
-# This class will install few packages listed .
+# to view klist -k output
+#
 #
 # === Parameters:
 #
 #Depending on OS, its  version and distribution, NOT yet treated
 #
-# nfs-common,
-# autofs,
-# autofs-ldap
+# sudo klist -k
+# Here is the output 
+#----------------------------------------------------------------------------------------------------------------------------
+#Keytab name: FILE:/etc/krb5.keytab
+#KVNO Principal
+#---- --------------------------------------------------------------------------
+#3 host/ditsbpc17l8.idevingtladf2.loc@IDEVINGTLADF2.LOC
+#3 host/ditsbpc17l8.idevingtladf2.loc@IDEVINGTLADF2.LOC
+#3 host/ditsbpc17l8.idevingtladf2.loc@IDEVINGTLADF2.LOC
+#3 host/ditsbpc17l8.idevingtladf2.loc@IDEVINGTLADF2.LOC
+#3 host/ditsbpc17l8.idevingtladf2.loc@IDEVINGTLADF2.LOC
+#3 host/DITSBPC17L8@IDEVINGTLADF2.LOC
+#3 host/DITSBPC17L8@IDEVINGTLADF2.LOC
+#3 host/DITSBPC17L8@IDEVINGTLADF2.LOC
+#3 host/DITSBPC17L8@IDEVINGTLADF2.LOC
+#3 host/DITSBPC17L8@IDEVINGTLADF2.LOC
+#3 DITSBPC17L8$@IDEVINGTLADF2.LOC
+#3 DITSBPC17L8$@IDEVINGTLADF2.LOC
+#3 DITSBPC17L8$@IDEVINGTLADF2.LOC
+#3 DITSBPC17L8$@IDEVINGTLADF2.LOC
+#3 DITSBPC17L8$@IDEVINGTLADF2.LOC
 #
 #
-
-class epfl_sso::s16_host_keytab_control {
-    package { 'nfs-common':
-          ensure => present,
-        }
-    package { 'autofs':
-          ensure => present,
-        }
-    package { 'autofs-ldap':
-          ensure => present,
-        }
-}
