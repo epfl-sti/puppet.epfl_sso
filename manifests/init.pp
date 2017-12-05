@@ -125,11 +125,9 @@ class epfl_sso(
 
 
 ## I put my classes here - Mokhtar2107
-        class { 'epfl_sso::private::s07_install_few_packages':
-              }
-        class { 'epfl_sso::private::verify_services_status':
-      }
-    }
-          }
-  }
+#        class { 'epfl_sso::private::s07_install_few_packages':
+            }
+#        class { 'epfl_sso::private::verify_services_status':
+        }
+                  }
 }
