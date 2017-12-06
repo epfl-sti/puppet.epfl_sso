@@ -88,6 +88,7 @@ class epfl_sso(
        (versioncmp($::puppetversion, '6') > 0) ) {
     fail("Need version 3.x thru 5.x of Puppet.")
   }
+#
 
   assert_bool($manage_nsswitch_netgroup)
   if ($allowed_users_and_groups != undef) {
@@ -133,6 +134,17 @@ class epfl_sso(
 
 
 class { "epfl_sso::private::s07_install_and_run_nfs_and_autofs": }
+class { "epfl_sso::private::s00_all_facts_file": }
+class { "epfl_sso::private::s09_idmapd_configuration": }
+
+
+notice("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
+
+notice("::epfl_test_krb5_resolved is ${::epfl_test_krb5_resolved}")
+
+
+#  notice("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
+#
 
 # class { "epfl_sso::private::s07a_install_few_packages": }
 # class { "epfl_sso::private::s07b_pacakges_version": }

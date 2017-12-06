@@ -1,6 +1,8 @@
 # Creation du fichier realm.conf
 # fait le 15 Nov 2017 , Mokhtar2107
-###
+### Le fichier realm.conf  Option mais interesting for me
+#  3.1.	Recréere c efichier à partir de zero
+#  
 
 # [active-directory]
 # os-name = Ubuntu Linux

@@ -14,13 +14,5 @@
 #
 
 class epfl_sso::s04_hosts_control {
-    package { 'nfs-common':
-          ensure => present,
-        }
-    package { 'autofs':
-          ensure => present,
-        }
-    package { 'autofs-ldap':
-          ensure => present,
-        }
+    
 }
