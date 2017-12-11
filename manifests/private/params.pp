@@ -34,4 +34,14 @@ class epfl_sso::private::params {
     "Darwin" => "/private/etc/krb5.conf",
     default  => "/etc/krb5.conf"
   }
+
+  $is_dhcp = ($::networking and $::networking[dhcp])
+
+  if (! $is_dhcp) {
+    $ensure_gssapi_server = "fixed-ip"
+  } elsif ($::domain == "intranet.epfl.ch") {
+    $ensure_gssapi_server = "dhcp"
+  } else {
+    $ensure_gssapi_server = undef
+  }
 }
