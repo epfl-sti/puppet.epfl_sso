@@ -1,5 +1,7 @@
 # Class: epfl_sso::private::ad
 #
+# Amended by Dominique on : 2017.12.11
+#-------------------------------------
 # Integrate this computer into EPFL's Active Directory
 #
 # This class is the translation into Puppet of
@@ -33,7 +35,7 @@
 #
 # $ad_server::   The Active Directory server to use
 #
-# $realm::       
+# $realm::
 #
 # $epflca_cert_url:: Where to find the certificate for the EPFL CA
 #                (necessary for ldapsearch to work)

@@ -1,5 +1,8 @@
 # Kerberos and GSSAPI configuration (client and server)
 #
+# Ceated  by Dominique on : 2017.12.11
+# Amended by Dominique on : 2017.12.11
+#-------------------------------------
 # === Parameters:
 #
 # $ensure:: Set to a true value to fail if the configuration cannot

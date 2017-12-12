@@ -1,3 +1,10 @@
+#
+#
+#
+#  
+
+
+
 class epfl_sso::private::package_sources {
   if ($::osfamily == "RedHat") {
     if ($::operatingsystem == "RedHat") {
