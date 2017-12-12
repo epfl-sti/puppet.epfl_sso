@@ -1,5 +1,5 @@
 
-# Class: epfl_sso::private::s04_ntp_installation
+# Class: epfl_sso::private::s06a_ntp_installation
 #
 # This class will install ntp service ,
 # also check next time if the version is latest !!!
@@ -12,8 +12,11 @@
 #
 #
 
-class epfl_sso::s04_ntp_installation {
+# == Class: ntp::install
+class ntp::install inherits ntp {
 
-  package { 'ntp'  : ensure => 'installed'  }
-  package { 'ntp'  : ensure => 'latest'     }
+  package { 'ntp':
+    ensure => installed,
+  }
+
 }

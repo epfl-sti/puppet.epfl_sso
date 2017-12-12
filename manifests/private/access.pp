@@ -1,6 +1,10 @@
 # Class: epfl_sso::private::access
 #
+# Amended by Dominique on : 2017.12.11
+#-------------------------------------
+# 
 # This class enforces access control.
+#
 #
 # === Parameters:
 #

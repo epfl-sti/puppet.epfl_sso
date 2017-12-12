@@ -1,4 +1,10 @@
 # Manage client-side LDAP configuration and certificates
+#
+#Amended by Dominique on : 2017.12.11
+#-------------------------------------
+#
+#
+
 class epfl_sso::private::ldap {
   anchor { "epfl_sso::private::ldap::tools_installed": }
   if ($::kernel == 'Linux') {

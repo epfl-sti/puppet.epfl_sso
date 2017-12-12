@@ -1,3 +1,7 @@
+#
+#
+#
+#
 class epfl_sso::private::params {
   $krb5_domain = "INTRANET.EPFL.CH"
   if ("${::epfl_test_krb5_resolved}" == "true") {
@@ -11,7 +15,7 @@ class epfl_sso::private::params {
     false => "intranet.epfl.ch"
   }
 
-# We will add a varable here to concatenate fqdn  "idevingtladf2.loc"
+
 
   $is_puppet_apply = !(defined('$::servername') and $::servername)
 
