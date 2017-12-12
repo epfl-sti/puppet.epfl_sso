@@ -12,6 +12,10 @@ $logger = Logger.new(STDERR)
 Facter.add("fqdn_ip") do
   fqdn = Facter.value(:fqdn)
   setcode do
-    Resolv.getaddress(fqdn)
+    begin
+      Resolv.getaddress(fqdn)
+    rescue Resolv::ResolvError
+      ""
+    end
   end
 end
