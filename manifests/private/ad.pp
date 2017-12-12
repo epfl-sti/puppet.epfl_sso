@@ -67,7 +67,6 @@
 class epfl_sso::private::ad(
   $ad_server,
   $realm,
-  $use_test_ad,
   $join_domain,
   $epflca_cert_url = 'http://certauth.epfl.ch/epflca.cer',
   $renew_domain_credentials = true,
@@ -83,16 +82,14 @@ class epfl_sso::private::ad(
     }
   }
 
-  if ($use_test_ad) {
-    epfl_sso::private::ad::etchosts_line { "idevingtladdc2": ip => "128.178.109.26" }
-  } else {
-    epfl_sso::private::ad::etchosts_line { "ad1": ip => "128.178.15.227" }
-    epfl_sso::private::ad::etchosts_line { "ad2": ip => "128.178.15.228" }
-    epfl_sso::private::ad::etchosts_line { "ad3": ip => "128.178.15.229" }
-    epfl_sso::private::ad::etchosts_line { "ad4": ip => "128.178.15.230" }
-    epfl_sso::private::ad::etchosts_line { "ad5": ip => "128.178.15.231" }
-    epfl_sso::private::ad::etchosts_line { "ad6": ip => "128.178.15.232" }
-  }
+
+  epfl_sso::private::ad::etchosts_line { "ad1": ip => "128.178.15.227" }
+  epfl_sso::private::ad::etchosts_line { "ad2": ip => "128.178.15.228" }
+  epfl_sso::private::ad::etchosts_line { "ad3": ip => "128.178.15.229" }
+  epfl_sso::private::ad::etchosts_line { "ad4": ip => "128.178.15.230" }
+  epfl_sso::private::ad::etchosts_line { "ad5": ip => "128.178.15.231" }
+  epfl_sso::private::ad::etchosts_line { "ad6": ip => "128.178.15.232" }
+
 
   include epfl_sso::private::ldap
   epfl_sso::private::ldap::trusted_ca_cert { 'epfl':

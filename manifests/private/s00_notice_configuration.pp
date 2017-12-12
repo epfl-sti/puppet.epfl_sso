@@ -18,7 +18,7 @@ class epfl_sso::private::s00_notice_configuration {
         '# This file is managed with Puppet.
 
 Here I try to print out all the content inside variables to handle them later,
-concatenate and so on.        
+concatenate and so on.
 
         Domain                  = <%= @ad_server  %>
         Realm                   = <%= @realmd  %>
@@ -28,7 +28,7 @@ concatenate and so on.
         operatingsystem         = <%= @operatingsystem  %>
         operatingsystemrelease  = <%= @operatingsystemrelease  %>
         ad_server               = <%= @ad_server  %>
-        use_test_ad             = <%= @use_test_ad  %>
+      
 
   #- : ALL EXCEPT root <%= @allowed_users_and_groups %> : ALL
    '),

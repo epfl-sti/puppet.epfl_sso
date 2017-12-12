@@ -21,11 +21,8 @@
 #  #  class epfl_sso::private::access(
 #  #    $allowed_users_and_groups = '',
 #  #    ) {
-/*$ad_server = "ad3.intranet.epfl.ch"
-}
-$use_test_ad = ($ad_server =~ /idevingtladf2.loc/)
-$realm = $use_test_ad ? {
-*/
+
+
 
 
 class epfl_sso::private::prod_s09_idmapd_configuration {
