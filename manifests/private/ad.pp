@@ -25,9 +25,9 @@
 #                as the same user (typically root) as Puppet is
 #                subsequently run as.
 #
-# $set_samba_secret::  Whether to pass --set-samba-secret to msktutil.
-#                      Requires a working, properly configured Samba
-#                      installation.
+# $manage_samba_secrets::  Whether to pass --set-samba-secret to msktutil.
+#                          Requires a working, properly configured Samba
+#                          installation.
 #
 # $renew_domain_credentials:: Whether to periodically renew the
 #                Kerberos keytab entry. Has no effect under "puppet
@@ -71,7 +71,7 @@ class epfl_sso::private::ad(
   $realm,
   $use_test_ad,
   $join_domain,
-  $set_samba_secret = $epfl_sso::private::params::set_samba_secret,
+  $manage_samba_secrets = $epfl_sso::private::params::manage_samba_secrets,
   $epflca_cert_url = 'http://certauth.epfl.ch/epflca.cer',
   $renew_domain_credentials = true,
 ) inherits epfl_sso::private::params {
@@ -137,10 +137,12 @@ class epfl_sso::private::ad(
           }
         }
 
-        if ($set_samba_secret) {
+        if ($manage_samba_secrets) {
           $_set_samba_secret_flag = "--set-samba-secret"
+          $_check_ads_testjoin = true
         } else {
           $_set_samba_secret_flag = ""
+          $_check_ads_testjoin = false
         }
 
         $_msktutil_create_command = inline_template("msktutil ${_msktutil_verbose} -c --server <%= @ad_server %> -b '<%= @join_domain %>' --no-reverse-lookups --enctypes 24 --computer-name <%= @hostname.upcase %> --service host/<%= @fqdn.downcase %> <%= @_set_samba_secret_flag %>")
@@ -157,19 +159,25 @@ class epfl_sso::private::ad(
           package { "moreutils":
             ensure => "installed"  # For the chronic command
           } ->
-          file { "/etc/cron.daily/renew-AD-keytab":
+          file { "/etc/cron.daily/renew-AD-credentials":
             mode => "0755",
-            content => "#!/bin/sh
+            content => inline_template("#!/bin/sh
 # Renew keytab, lest Active Directory forget about us after 90 days
 #
 # Managed by Puppet, DO NOT EDIT
 
-chronic ${_msktutil_renew_command}
-"
+chronic <%= @_msktutil_renew_command %>
+<% if @_check_ads_testjoin %>
+# Also send email if the following doesn't work:
+chronic net ads testjoin
+<% end %>
+")
+          }
+          file { "/etc/cron.daily/renew-AD-keytab":
+            ensure => "absent"  # Former name of renew-AD-credentials
           }
         }
       }
-
     }
     default: {
       fail("Unsupported operating system: ${::kernel}")
