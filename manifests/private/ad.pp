@@ -25,6 +25,10 @@
 #                as the same user (typically root) as Puppet is
 #                subsequently run as.
 #
+# $set_samba_secret::  Whether to pass --set-samba-secret to msktutil.
+#                      Requires a working, properly configured Samba
+#                      installation.
+#
 # $renew_domain_credentials:: Whether to periodically renew the
 #                Kerberos keytab entry. Has no effect under "puppet
 #                agent"; RECOMMENDED for "puppet apply" unless this
@@ -67,6 +71,7 @@ class epfl_sso::private::ad(
   $realm,
   $use_test_ad,
   $join_domain,
+  $set_samba_secret = $epfl_sso::private::params::set_samba_secret,
   $epflca_cert_url = 'http://certauth.epfl.ch/epflca.cer',
   $renew_domain_credentials = true,
 ) inherits epfl_sso::private::params {
@@ -131,8 +136,15 @@ class epfl_sso::private::ad(
             $_msktutil_verbose = "--verbose"
           }
         }
-        $_msktutil_create_command = inline_template("msktutil ${_msktutil_verbose} -c --server <%= @ad_server %> -b '<%= @join_domain %>' --no-reverse-lookups --enctypes 24 --computer-name <%= @hostname.upcase %> --service host/<%= @fqdn.downcase %>")
-        $_msktutil_renew_command = inline_template("msktutil ${_msktutil_verbose} --auto-update --enctypes 24 --computer-name <%= @hostname.upcase %>")
+
+        if ($set_samba_secret) {
+          $_set_samba_secret_flag = "--set-samba-secret"
+        } else {
+          $_set_samba_secret_flag = ""
+        }
+
+        $_msktutil_create_command = inline_template("msktutil ${_msktutil_verbose} -c --server <%= @ad_server %> -b '<%= @join_domain %>' --no-reverse-lookups --enctypes 24 --computer-name <%= @hostname.upcase %> --service host/<%= @fqdn.downcase %> <%= @_set_samba_secret_flag %>")
+        $_msktutil_renew_command = inline_template("msktutil ${_msktutil_verbose} --auto-update --enctypes 24 --computer-name <%= @hostname.upcase %> <%= @_set_samba_secret_flag %>")
         exec { $_msktutil_create_command:
           path => $::path,
           command => "/bin/echo 'mkstutil -c failed - Please run kinit <ADSciper or \"itvdi-ad-YOURSCHOOL\"> first'; false",

@@ -44,4 +44,6 @@ class epfl_sso::private::params {
   } else {
     $ensure_gssapi_server = undef
   }
+
+  $set_samba_secret = any2bool($::has_net_changesecretpw)
 }
