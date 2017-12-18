@@ -1,15 +1,14 @@
+#
+#
+#
+#
 class epfl_sso::private::params {
   $krb5_domain = "INTRANET.EPFL.CH"
-  if ("${::epfl_test_krb5_resolved}" == "true") {
-    $ad_server = "idevingtladdc2.idevingtladf2.loc"
-  } elsif ("${::epfl_krb5_resolved}" == "true") {
+  if ("${::epfl_krb5_resolved}" == "true") {
     $ad_server = "ad3.intranet.epfl.ch"
   }
-  $use_test_ad = ($ad_server =~ /idevingtladf2.loc/)
-  $realm = $use_test_ad ? {
-    true  => "idevingtladf2.loc",
-    false => "intranet.epfl.ch"
-  }
+
+  $realm = "intranet.epfl.ch"
 
 # We will add a varable here to concatenate fqdn  "idevingtladf2.loc"
 
@@ -35,5 +34,15 @@ class epfl_sso::private::params {
   $krb5_conf_file = $::osfamily ? {
     "Darwin" => "/private/etc/krb5.conf",
     default  => "/etc/krb5.conf"
+  }
+
+  $is_dhcp = ($::networking and $::networking[dhcp])
+
+  if (! $is_dhcp) {
+    $ensure_gssapi_server = "fixed-ip"
+  } elsif ($::domain == "intranet.epfl.ch") {
+    $ensure_gssapi_server = "dhcp"
+  } else {
+    $ensure_gssapi_server = undef
   }
 }

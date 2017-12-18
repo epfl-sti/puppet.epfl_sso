@@ -1,5 +1,7 @@
 # Class: epfl_sso::private::ad
 #
+# Amended by Dominique on : 2017.12.11
+#-------------------------------------
 # Integrate this computer into EPFL's Active Directory
 #
 # This class is the translation into Puppet of
@@ -33,7 +35,7 @@
 #
 # $ad_server::   The Active Directory server to use
 #
-# $realm::       
+# $realm::
 #
 # $epflca_cert_url:: Where to find the certificate for the EPFL CA
 #                (necessary for ldapsearch to work)
@@ -65,21 +67,13 @@
 class epfl_sso::private::ad(
   $ad_server,
   $realm,
-  $use_test_ad,
   $join_domain,
   $epflca_cert_url = 'http://certauth.epfl.ch/epflca.cer',
-  $renew_domain_credentials = true
+  $renew_domain_credentials = true,
 ) inherits epfl_sso::private::params {
-  if ($::epfl_krb5_resolved == "false" and $::epfl_test_krb5_resolved == "false") {
-    fail("Unable to resolve KDC in DNS - You must use the EPFL DNS servers.")
-  }
-  if ($::fqdn !~ /[.]/) {
-    fail("Your FQDN isn't (${::fqdn}) - Refusing to create bogus AD entry")
-  }
-
-  # Kerberos clients that insist on "authenticating" their peer using a
-  # reverse DNS are in for a surprise for some of the hosts... Among which,
-  # the AD servers themselves :(
+  # Kerberos servers who would like to identify their peer using a
+  # reverse DNS are in for a surprise for some of the hosts... Among
+  # which, the AD servers themselves :(
   define etchosts_line($ip) {
     host { "${title}.${::epfl_sso::private::ad::realm}":
       host_aliases => $title,
@@ -88,16 +82,14 @@ class epfl_sso::private::ad(
     }
   }
 
-  if ($use_test_ad) {
-    epfl_sso::private::ad::etchosts_line { "idevingtladdc2": ip => "128.178.109.26" }
-  } else {
-    epfl_sso::private::ad::etchosts_line { "ad1": ip => "128.178.15.227" }
-    epfl_sso::private::ad::etchosts_line { "ad2": ip => "128.178.15.228" }
-    epfl_sso::private::ad::etchosts_line { "ad3": ip => "128.178.15.229" }
-    epfl_sso::private::ad::etchosts_line { "ad4": ip => "128.178.15.230" }
-    epfl_sso::private::ad::etchosts_line { "ad5": ip => "128.178.15.231" }
-    epfl_sso::private::ad::etchosts_line { "ad6": ip => "128.178.15.232" }
-  }
+
+  epfl_sso::private::ad::etchosts_line { "ad1": ip => "128.178.15.227" }
+  epfl_sso::private::ad::etchosts_line { "ad2": ip => "128.178.15.228" }
+  epfl_sso::private::ad::etchosts_line { "ad3": ip => "128.178.15.229" }
+  epfl_sso::private::ad::etchosts_line { "ad4": ip => "128.178.15.230" }
+  epfl_sso::private::ad::etchosts_line { "ad5": ip => "128.178.15.231" }
+  epfl_sso::private::ad::etchosts_line { "ad6": ip => "128.178.15.232" }
+
 
   include epfl_sso::private::ldap
   epfl_sso::private::ldap::trusted_ca_cert { 'epfl':
@@ -105,27 +97,7 @@ class epfl_sso::private::ad(
     ensure => 'present'
   }
 
-  file { $::epfl_sso::private::params::krb5_conf_file:
-    content => template("epfl_sso/krb5.conf.erb")
-  }
-
-  define gssapi_auth_line() {
-    file_line { "GSSAPIAuthentication 'yes' in ${title}":
-      path => $title,
-      line => "    GSSAPIAuthentication yes",
-      match => "GSSAPIAuthentication",
-      ensure => "present",
-      multiple => true
-    }
-  }
-
-  $ssh_config = "/etc/ssh/ssh_config"
-  $sshd_config = "/etc/ssh/sshd_config"
-  epfl_sso::private::ad::gssapi_auth_line { $ssh_config: }
-  epfl_sso::private::ad::gssapi_auth_line { $sshd_config: }  ~>
-  service { "sshd":
-    ensure => "running"
-  }
+  class { "epfl_sso::private::gssapi": }
 
   case $::kernel {
     'Darwin': {
@@ -185,8 +157,6 @@ chronic ${_msktutil_renew_command}
         }
       }
 
-      include epfl_sso::private::pam
-      epfl_sso::private::pam::module { "krb5": }
     }
     default: {
       fail("Unsupported operating system: ${::kernel}")

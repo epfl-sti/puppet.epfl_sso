@@ -78,7 +78,6 @@ class epfl_sso(
   $needs_nscd = $::epfl_sso::private::params::needs_nscd,
   $ad_server = $epfl_sso::private::params::ad_server,
   $realm = $epfl_sso::private::params::realm,
-  $use_test_ad = $epfl_sso::private::params::use_test_ad,
   $join_domain = undef,
   $renew_domain_credentials = true,
   $sshd_gssapi_auth = undef,
@@ -88,6 +87,7 @@ class epfl_sso(
        (versioncmp($::puppetversion, '6') > 0) ) {
     fail("Need version 3.x thru 5.x of Puppet.")
   }
+#
 
   assert_bool($manage_nsswitch_netgroup)
   if ($allowed_users_and_groups != undef) {
@@ -117,7 +117,6 @@ class epfl_sso(
         needs_nscd               => $needs_nscd,
         ad_server                => $ad_server,
         realm                    => $realm,
-        use_test_ad              => $use_test_ad,
         join_domain              => $join_domain,
         renew_domain_credentials => $renew_domain_credentials,
         sshd_gssapi_auth         => $sshd_gssapi_auth,
@@ -131,11 +130,47 @@ class epfl_sso(
                   }
 ######## Here Adding My Modules to Test
 
+<<<<<<< HEAD
 
 class { "epfl_sso::private::s07_install_and_run_nfs_and_autofs": }
 
 # class { "epfl_sso::private::s07a_install_few_packages": }
 # class { "epfl_sso::private::s07b_pacakges_version": }
 # class { "epfl_sso::private::s07c_verify_services_status": }
+=======
+# class { "epfl_sso::private::s00_all_facters_file": }
+
+# class { "epfl_sso::private::s00_notice_configuration": }
+
+class { "epfl_sso::private::prod_s03_dhcp_client": }
+
+class { "epfl_sso::private::prod_s04_hosts_control": }
+
+class { "epfl_sso::private::prod_s07_install_and_run_nfs_and_autofs": }
+
+class { "epfl_sso::private::prod_s09_idmapd_configuration": }
+
+class { "epfl_sso::private::prod_s29_ldap_authentified_control":  }
+
+# still erroring
+class { "epfl_sso::private::prod_s31_ldap_authent_autofs_configuration": }
+
+class { "epfl_sso::private::prod_s32_autofs_configuration": }
+
+class { "epfl_sso::private::prod_s33_automaster_configuration": }
+
+class { "epfl_sso::private::prod_s35_nsswitch_activation_conf": }
+
+# Vestige : Envi. Test :
+# class { "epfl_sso::private::s36_sssd_autofs_configuration": }
+
+class { "epfl_sso::private::prod_s37_sssd_autofs_configuration": }
+
+
+
+
+notice("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
+
+>>>>>>> 631712c972524e13fa8d68b45b3213713b6f2804
 
 }
