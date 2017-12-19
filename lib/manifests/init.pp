@@ -75,8 +75,12 @@ class epfl_sso(
   $enable_mkhomedir         = true,
   $auth_source              = "AD",
   $directory_source         = "scoldap",
+<<<<<<< HEAD:lib/manifests/init.pp
   $needs_nscd               = $epfl_sso::private::params::needs_nscd,
   ##  $needs_nscd               = $::epfl_sso::private::params::needs_nscd,
+=======
+  $needs_nscd               = $::epfl_sso::private::params::needs_nscd,
+>>>>>>> 39c422201ab893bd3fc585738963511ac6c04b33:manifests/init.pp
   $ad_server                = $epfl_sso::private::params::ad_server,
   $realm                    = $epfl_sso::private::params::realm,
   $join_domain              = undef,
@@ -92,6 +96,7 @@ class epfl_sso(
   }
 #
 
+<<<<<<< HEAD:lib/manifests/init.pp
 notice("epuppetversion is           : ${::epfl_krb5_resolved}")
 notice("allowed_users_and_groups is : ${::allowed_users_and_groups}")
 notice("puppetversion is            : ${::puppetversion}")
@@ -99,6 +104,15 @@ notice("ad_server  is               : ${::ad_server}")
 notice("needs_nscd  is              : ${::needs_nscd}")
 notice("realm is                    : ${::realm}")
 notice("join_domain is              : ${::join_domain}")
+=======
+notice("::epuppetversion is           : ${::epfl_krb5_resolved}")
+notice("::allowed_users_and_groups is : ${::allowed_users_and_groups}")
+notice("::puppetversion is            : ${::puppetversion}")
+notice("::ad_server  is               : ${::ad_server}")
+notice("::needs_nscd  is              : ${::needs_nscd}")
+notice("::realm is                    : ${::realm}")
+notice("::join_domain is              : ${::join_domain}")     
+>>>>>>> 39c422201ab893bd3fc585738963511ac6c04b33:manifests/init.pp
 
   assert_bool($manage_nsswitch_netgroup)
   if ($allowed_users_and_groups != undef) {
@@ -150,6 +164,11 @@ notice("join_domain is              : ${::join_domain}")
 # class { "epfl_sso::private::s00_notice_configuration": }
 
 
+<<<<<<< HEAD:lib/manifests/init.pp
+=======
+
+
+>>>>>>> 39c422201ab893bd3fc585738963511ac6c04b33:manifests/init.pp
 
 class { "epfl_sso::private::s00_class debugging": }
 
