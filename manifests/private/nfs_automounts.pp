@@ -1,6 +1,10 @@
 # Class: epfl_sso::private::nfs_automounts
 #
 # This class makes automounting
+#
+#
+#
+
 class epfl_sso::private::nfs_automounts() {
   file { '/etc/default/nfs-common':
     ensure  => present,

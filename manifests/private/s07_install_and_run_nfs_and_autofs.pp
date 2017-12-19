@@ -15,6 +15,7 @@
 #
 
 class epfl_sso::private::s07_install_and_run_nfs_and_autofs {
+
       package { 'nfs-common'  : ensure => 'latest' }
       package { 'autofs'      : ensure => 'latest' }
       package { 'autofs-ldap' : ensure => 'latest' }
@@ -25,5 +26,5 @@ class epfl_sso::private::s07_install_and_run_nfs_and_autofs {
           hasrestart  => true,
           hasstatus   => true,
               }
-      
+
 }

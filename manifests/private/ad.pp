@@ -1,7 +1,5 @@
 # Class: epfl_sso::private::ad
 #
-# Amended by Dominique on : 2017.12.11
-#-------------------------------------
 # Integrate this computer into EPFL's Active Directory
 #
 # This class is the translation into Puppet of

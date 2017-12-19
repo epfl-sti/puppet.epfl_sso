@@ -10,8 +10,7 @@
 #---------------------------------
 # ldap_schema = RFC2307
 # ldap_sasl_mech = GSSAPI
-# ldap_autofs_search_base = OU=automaps,DC=idevingtladf2,DC=loc
-# ldap_autofs_map_object_class = automountMap
+#  ldap_autofs_map_object_class = automountMap
 # ldap_autofs_map_name = automountMapName
 # ldap_autofs_entry_object_class = automount
 # ldap_autofs_entry_key = cn

@@ -1,7 +1,5 @@
 # Manage client-side LDAP configuration and certificates
 #
-#Amended by Dominique on : 2017.12.11
-#-------------------------------------
 #
 #
 
