@@ -7,7 +7,7 @@
 #       https://cadiwww.epfl.ch/cgi-bin/accountprefs/
 #
 # As of Feb, 2017 the options are
-# 
+#
 # /bin/sh
 # /bin/bash
 # /bin/tcsh
@@ -16,7 +16,10 @@
 # /bin/bash2
 # /bin/ash
 # /bin/bsh
-# /sbin/nologin                
+# /sbin/nologin
+#
+#
+            
 class epfl_sso::private::login_shells {
   # This seems to be the lowest common denominator across distributions:
   ensure_packages(['tcsh', 'zsh', 'bsh'])

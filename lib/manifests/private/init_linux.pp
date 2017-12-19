@@ -1,5 +1,8 @@
 # Main manifest for the Linux platform
 # The Darwin entry point is so small it is folded into ../init.pp instead
+#
+#
+#
 class epfl_sso::private::init_linux(
   $allowed_users_and_groups,
   $manage_nsswitch_netgroup,

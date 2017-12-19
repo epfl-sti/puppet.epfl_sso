@@ -19,7 +19,7 @@
 #   mechanism are installed and configured (in /etc/idmapd.conf)
 #
 # * Ensure that rpc.idmapd is *not* running
-  
+
 class epfl_sso::nfs(
   $server_ensure = "present",
   $client_ensure = "present",
@@ -48,7 +48,7 @@ class epfl_sso::nfs(
   }
 
   ensure_packages($rpc_gssd_package)
-    
+
   Anchor["epfl_sso::nfs::rpc_gssd_configured"] ->
   service { "rpc-gssd":
       ensure => $client_ensure ? {
@@ -65,6 +65,8 @@ class epfl_sso::nfs(
   }
 
   ########### ID-mapping configuration
+  #
+  
   $idmapd_conf_file = "/etc/idmapd.conf"
 
   ini_setting { "[General] Domain in ${idmapd_conf_file}":
@@ -78,7 +80,7 @@ class epfl_sso::nfs(
   if ($client_ensure == "present") {
     ensure_packages([$request_key_package, $nfsidmap_package])
     file { [$request_key_path, $nfsidmap_path]:
-      ensure => "present",
+      ensure  => "present",
       require => Package[$request_key_package, $nfsidmap_package]
     }
   }
@@ -89,6 +91,8 @@ class epfl_sso::nfs(
   # https://www.kernel.org/doc/Documentation/filesystems/nfs/idmapper.txt
   # and
   # https://bugs.launchpad.net/ubuntu/+source/nfs-utils/+bug/1428961)
+  #
+  #
   service { ["idmapd", "rpc.idmapd"]:
     ensure => "stopped",
     enable => false

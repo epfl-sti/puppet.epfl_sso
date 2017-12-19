@@ -1,5 +1,5 @@
 
-# Class: epfl_sso::private::prod_s07_install_few_packages
+# Class: epfl_sso::private::s07a_install_few_packages
 #
 # This class will install few packages listed .
 #class packages {
@@ -14,7 +14,7 @@
 #
 #
 
-class epfl_sso::private::prod_s07_install_and_run_nfs_and_autofs {
+class epfl_sso::private::s07_install_and_run_nfs_and_autofs {
 
       package { 'nfs-common'  : ensure => 'latest' }
       package { 'autofs'      : ensure => 'latest' }

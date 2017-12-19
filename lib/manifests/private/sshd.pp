@@ -36,10 +36,10 @@ class epfl_sso::private::sshd(
 
   define sshd_config_line() {
     file_line { "${title} in ${::epfl_sso::private::sshd::_sshd_config_file}":
-      path => $::epfl_sso::private::sshd::_sshd_config_file,
-      line => $title,
-      ensure => $::epfl_sso::private::sshd::enable_gssapi ? {
-        true => "present",
+        path    => $::epfl_sso::private::sshd::_sshd_config_file,
+        line    => $title,
+        ensure  => $::epfl_sso::private::sshd::enable_gssapi ? {
+        true    => "present",
         default => "absent"
       }
     } ~> Service[$epfl_sso::private::sshd::_sshd_service]

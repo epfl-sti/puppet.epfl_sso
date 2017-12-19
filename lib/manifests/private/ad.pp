@@ -1,7 +1,5 @@
 # Class: epfl_sso::private::ad
 #
-# Amended by Dominique on : 2017.12.11
-#-------------------------------------
 # Integrate this computer into EPFL's Active Directory
 #
 # This class is the translation into Puppet of
@@ -93,8 +91,8 @@ class epfl_sso::private::ad(
 
   include epfl_sso::private::ldap
   epfl_sso::private::ldap::trusted_ca_cert { 'epfl':
-    url => $epflca_cert_url,
-    ensure => 'present'
+    url     => $epflca_cert_url,
+    ensure  => 'present'
   }
 
   class { "epfl_sso::private::gssapi": }
@@ -109,7 +107,9 @@ class epfl_sso::private::ad(
           ensure_packages([ "krb5-user", "libpam-krb5"])
         }
         "RedHat": {
+          #
           # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Managing_Smart_Cards/installing-kerberos.html
+          #
           ensure_packages(["krb5-workstation", "krb5-libs", "pam_krb5"])
         }
         default: {
@@ -133,9 +133,9 @@ class epfl_sso::private::ad(
         $_msktutil_create_command = inline_template("msktutil ${_msktutil_verbose} -c --server <%= @ad_server %> -b '<%= @join_domain %>' --no-reverse-lookups --enctypes 24 --computer-name <%= @hostname.upcase %> --service host/<%= @fqdn.downcase %>")
         $_msktutil_renew_command = inline_template("msktutil ${_msktutil_verbose} --auto-update --enctypes 24 --computer-name <%= @hostname.upcase %>")
         exec { $_msktutil_create_command:
-          path => $::path,
+          path    => $::path,
           command => "/bin/echo 'mkstutil -c failed - Please run kinit <ADSciper or \"itvdi-ad-YOURSCHOOL\"> first'; false",
-          unless => $_msktutil_renew_command,
+          unless  => $_msktutil_renew_command,
           require => [Package["msktutil"], File["/etc/krb5.conf"]]
         }
 
@@ -145,7 +145,7 @@ class epfl_sso::private::ad(
             ensure => "installed"  # For the chronic command
           } ->
           file { "/etc/cron.daily/renew-AD-keytab":
-            mode => "0755",
+            mode    => "0755",
             content => "#!/bin/sh
 # Renew keytab, lest Active Directory forget about us after 90 days
 #

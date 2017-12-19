@@ -1,4 +1,5 @@
 
+
 # Class: epfl_sso::private::s04_ntp_installation
 #
 # This class will install ntp service ,
