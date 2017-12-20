@@ -135,6 +135,18 @@ class epfl_sso::private::ad(
 
 
       ")
+        } elsif ($::fqdn !~ /[.]epfl[.]ch$/) {
+          fail("
+
+
+
+      epfl_sso error: ${::fqdn} does not end with epfl.ch - Refusing to create bogus AD entry
+
+      Hint: change the entry in /etc/hosts .
+
+
+
+      ")
         }
 
         ensure_packages("msktutil")
