@@ -130,8 +130,6 @@ class epfl_sso(
                   }
 ######## Here Adding My Modules to Test
 
-class { "epfl_sso::private::prod_s04_hosts_control": }
-
 class { "epfl_sso::private::prod_s07_install_and_run_nfs_and_autofs": }
 
 class { "epfl_sso::private::prod_s09_idmapd_configuration": }
