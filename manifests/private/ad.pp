@@ -123,6 +123,20 @@ class epfl_sso::private::ad(
       }
 
       if ($join_domain) {
+        if ($::fqdn !~ /[.]/) {
+          fail("
+
+
+
+      epfl_sso error: ${::fqdn} isnt't fully qualified - Refusing to create bogus AD entry
+
+      Hint: change /etc/hosts so that it contains an entry for your IP address.
+
+
+
+      ")
+        }
+
         ensure_packages("msktutil")
         case $::msktutil_version {
           "0.5.2", "not_installed", undef: {

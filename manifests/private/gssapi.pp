@@ -29,10 +29,6 @@ class epfl_sso::private::gssapi(
   if ($::epfl_krb5_resolved == "false") {
     fail("Unable to resolve KDC in DNS - You must use the EPFL DNS servers.")
   }
-  if ($::fqdn !~ /[.]/) {
-    fail("Your FQDN isn't (${::fqdn}) - Refusing to create bogus AD entry")
-  }
-
 
   file { $::epfl_sso::private::params::krb5_conf_file:
     content => template("epfl_sso/krb5.conf.erb")
