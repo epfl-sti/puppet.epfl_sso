@@ -130,12 +130,6 @@ class epfl_sso(
                   }
 ######## Here Adding My Modules to Test
 
-# class { "epfl_sso::private::s00_all_facters_file": }
-
-# class { "epfl_sso::private::s00_notice_configuration": }
-
-class { "epfl_sso::private::prod_s03_dhcp_client": }
-
 class { "epfl_sso::private::prod_s04_hosts_control": }
 
 class { "epfl_sso::private::prod_s07_install_and_run_nfs_and_autofs": }
