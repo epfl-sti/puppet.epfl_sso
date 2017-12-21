@@ -147,6 +147,18 @@ class epfl_sso::private::ad(
 
 
       ")
+        } elsif ($::fqdn.split('[.]')[0] != $::hostname) {
+          fail("
+
+
+
+      epfl_sso error: ${::fqdn} does not start with ${::hostname} - Refusing to create bogus AD entry
+
+      Hint: change the entry in /etc/hosts .
+
+
+
+      ")
         }
 
         ensure_packages("msktutil")
