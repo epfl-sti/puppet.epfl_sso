@@ -135,7 +135,7 @@ class epfl_sso::private::ad(
 
 
       ")
-        } elsif ($::fqdn !~ /[.]epfl[.]ch$/) {
+        } elsif ($::fqdn !~ /[.]intranet[.]ch$/) {
           fail("
 
 
