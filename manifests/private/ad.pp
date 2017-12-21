@@ -149,7 +149,7 @@ class epfl_sso::private::ad(
         $_msktutil_renew_command = inline_template("msktutil ${_msktutil_verbose} --auto-update --enctypes 24 --computer-name <%= @hostname.upcase %> <%= @_set_samba_secret_flag %>")
         exec { $_msktutil_create_command:
           path => $::path,
-          command => "/bin/echo 'mkstutil -c failed - Please run kinit <ADSciper or \"itvdi-ad-YOURSCHOOL\"> first'; false",
+          command => "/bin/echo 'msktutil -c failed - Please run kinit <ADSciper or \"itvdi-ad-YOURSCHOOL\"> first'; false",
           unless => $_msktutil_renew_command,
           require => [Package["msktutil"], File["/etc/krb5.conf"]]
         }
