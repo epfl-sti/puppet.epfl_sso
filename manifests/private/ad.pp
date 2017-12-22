@@ -98,8 +98,8 @@ class epfl_sso::private::ad(
 
   include epfl_sso::private::ldap
   epfl_sso::private::ldap::trusted_ca_cert { 'epfl':
-    url => $epflca_cert_url,
-    ensure => 'present'
+    url     => $epflca_cert_url,
+    ensure  => 'present'
   }
 
   class { "epfl_sso::private::gssapi": }

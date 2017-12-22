@@ -1,5 +1,5 @@
 
-# Class: epfl_sso::private::prod_s29_ldap_authentified_control
+# Class: epfl_sso::private::s29_ldap_authentified_control
 #
 # 29 Configuration du client LDAP en mode authentifié
 #   /etc/ldap/ldap.conf
@@ -17,7 +17,7 @@
 #
 #
 #
-class epfl_sso::private::prod_s29_ldap_authentified_control {
+class epfl_sso::private::s29_ldap_authentified_control {
 
   file { '/etc/ldap/ldap.conf':
       ensure  => present,
@@ -45,11 +45,9 @@ TLS_CACERTDIR   /etc/ldap/cacerts
 TLS_REQCERT     demand
 
 '),
-  
+
   }
 include epfl_sso::private::params
-
-
 include epfl_sso::private::pam
 
 }

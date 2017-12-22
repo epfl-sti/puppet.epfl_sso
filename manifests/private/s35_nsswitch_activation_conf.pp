@@ -1,7 +1,7 @@
 
 #
 #
-# Class: epfl_sso::private::prod_s35_nsswitch_activation_conf
+# Class: epfl_sso::private::s35_nsswitch_activation_conf
 #
 # 35 Activation de l’automount dans nsswitch.conf
 #  /etc/nsswitch.conf
@@ -12,7 +12,7 @@
 #
 #
 
-class epfl_sso::private::prod_s35_nsswitch_activation_conf {
+class epfl_sso::private::s35_nsswitch_activation_conf {
 
   file { '/etc/nsswitch.conf':
       ensure  => present,

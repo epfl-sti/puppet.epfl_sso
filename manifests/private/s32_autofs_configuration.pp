@@ -7,7 +7,7 @@
 #Depending on OS, its  version and distribution, NOT yet treated
 #
 #
-class epfl_sso::private::prod_s32_autofs_configuration {
+class epfl_sso::private::s32_autofs_configuration {
 
   file { '/etc/autofs.conf':
       ensure  => present,

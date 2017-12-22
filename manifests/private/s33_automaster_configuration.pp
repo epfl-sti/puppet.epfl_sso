@@ -1,7 +1,7 @@
 
 
 #
-# Class: epfl_sso::private::prod_s33_automaster_configuration
+# Class: epfl_sso::private::s33_automaster_configuration
 #
 # 33 Configuration de auto.master
 #   /etc/auto.master
@@ -12,7 +12,7 @@
 #
 #
 
-class epfl_sso::private::prod_s33_automaster_configuration {
+class epfl_sso::private::s33_automaster_configuration {
 
   file { '/etc/auto.master':
       ensure  => present,
@@ -30,9 +30,8 @@ class epfl_sso::private::prod_s33_automaster_configuration {
 
 '),
 
-  
+
   }
 include epfl_sso::private::params
-
 include epfl_sso::private::pam
 }

@@ -11,7 +11,7 @@
 #  - : ALL EXCEPT root <%= @allowed_users_and_groups %> : ALL
 #
 
-class epfl_sso::private::prod_s31_ldap_authent_autofs_configuration {
+class epfl_sso::private::s31_ldap_authent_autofs_configuration {
 
   file { '/etc/autofs_ldap_auth.conf':
       ensure  => present,
@@ -43,8 +43,6 @@ clientprinc    = "host/<%= @hostname %>.intranet.epfl.ch@INTRANET.EPFL.CH"
   }
 
 include epfl_sso::private::params
-
-
 include epfl_sso::private::pam
 
 }

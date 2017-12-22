@@ -128,27 +128,30 @@ class epfl_sso(
 
         }
                   }
-######## Here Adding My Modules to Test
+######## Here Adding My Modules @ Classes to Test
 
-class { "epfl_sso::private::prod_s07_install_and_run_nfs_and_autofs": }
 
-class { "epfl_sso::private::prod_s09_idmapd_configuration": }
+class { "epfl_sso::private::s00_absent_files":}
 
-class { "epfl_sso::private::prod_s29_ldap_authentified_control":  }
+class { "epfl_sso::private::s07_install_and_run_nfs_and_autofs": }
+
+class { "epfl_sso::private::s09_idmapd_configuration": }
+
+class { "epfl_sso::private::s29_ldap_authentified_control":  }
 
 # still erroring
-class { "epfl_sso::private::prod_s31_ldap_authent_autofs_configuration": }
+class { "epfl_sso::private::s31_ldap_authent_autofs_configuration": }
 
-class { "epfl_sso::private::prod_s32_autofs_configuration": }
+class { "epfl_sso::private::s32_autofs_configuration": }
 
-class { "epfl_sso::private::prod_s33_automaster_configuration": }
+class { "epfl_sso::private::s33_automaster_configuration": }
 
-class { "epfl_sso::private::prod_s35_nsswitch_activation_conf": }
+class { "epfl_sso::private::s35_nsswitch_activation_conf": }
 
 # Vestige : Envi. Test :
 # class { "epfl_sso::private::s36_sssd_autofs_configuration": }
 
-class { "epfl_sso::private::prod_s37_sssd_autofs_configuration": }
+class { "epfl_sso::private::s37_sssd_autofs_configuration": }
 
 
 

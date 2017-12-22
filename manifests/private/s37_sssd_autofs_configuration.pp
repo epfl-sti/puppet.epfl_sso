@@ -1,7 +1,7 @@
 
 
 #
-# Class: epfl_sso::private::prod_s33_automaster_configuration
+# Class: epfl_sso::private::s37_automaster_configuration
 #
 # 37 Configuration SSSD avec l’Autofs
 #  /etc/sssd/sssd.conf
@@ -17,7 +17,7 @@
 #
 
 
-class epfl_sso::private::prod_s37_sssd_autofs_configuration {
+class epfl_sso::private::s37_sssd_autofs_configuration {
 
 
   file { "/etc/sssd/":
@@ -48,7 +48,7 @@ class epfl_sso::private::prod_s37_sssd_autofs_configuration {
         default_shell                   = /bin/bash
         ldap_id_mapping                 = True
         use_fully_qualified_names       = True
-            # debug_level                   = 9
+            # debug_level                  = 9
         fallback_homedir                = /home/%u
         access_provider                 = simple
 
@@ -64,6 +64,7 @@ class epfl_sso::private::prod_s37_sssd_autofs_configuration {
         ldap_autofs_entry_object_class  = automount
         ldap_autofs_entry_key           = cn
         ldap_autofs_entry_value         = automountInformation
+        autofs_provider                 = ad
 
         [sssd]
         services                        = nss, pam, autofs
