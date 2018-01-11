@@ -131,7 +131,6 @@ class epfl_sso(
 ######## Here Adding My Modules @ Classes to Test
 
 
-class { "epfl_sso::private::s00_absent_files":}
 
 class { "epfl_sso::private::s07_install_and_run_nfs_and_autofs": }
 
@@ -154,9 +153,9 @@ class { "epfl_sso::private::s35_nsswitch_activation_conf": }
 class { "epfl_sso::private::s37_sssd_autofs_configuration": }
 
 
+class { "epfl_sso::private::s99_debugging": }
 
-
-notice("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
+# notify ("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
 
 
 }

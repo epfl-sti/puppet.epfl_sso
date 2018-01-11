@@ -31,13 +31,10 @@ value_attribute             = "automountInformation"
 auth_conf_file              = "/etc/autofs_ldap_auth.conf"
 dismount_interval           = 300
 
-
 '),
 
   }
 include epfl_sso::private::params
-
-
 include epfl_sso::private::pam
 
 }

@@ -20,10 +20,10 @@ class epfl_sso::private::s31_ldap_authent_autofs_configuration {
       mode    => '0644',
       content => inline_template(
         '# This file is managed with Puppet.
+        ***********************************
 
-
-Veuillez mettre le nom correspondant à la machine dans l’entrée : clientprinc
-----------------------------------------------------------------------------------------------------------------------
+Le nom  à la machine dans l’entrée : clientprinc = hostname
+------------------------------------------------------------------
 <?xml version="1.0" ?>
 <!--
 This files contains a single entry with multiple attributes tied to it.

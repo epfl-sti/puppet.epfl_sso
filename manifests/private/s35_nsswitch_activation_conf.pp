@@ -32,23 +32,23 @@ passwd:     compat sss
 group:      compat sss
 shadow:     compat sss
 gshadow:    files
+
 ##hosts:    files resolve [!UNAVAIL=return] mdns4_minimal [NOTFOUND=return] dns
 hosts:      files mdns4_minimal [NOTFOUND=return] dns
 networks:   files
+
 protocols:  db files
 services:   db files sss
 ethers:     db files
 rpc:        db files
+
 netgroup:   nis sss
 sudoers:    files sss
-automount:  files sss
-
 automount:  files sss
 
 '),
 
   }
 include epfl_sso::private::params
-
 include epfl_sso::private::pam
 }

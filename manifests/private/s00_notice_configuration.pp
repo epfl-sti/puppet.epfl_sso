@@ -28,7 +28,7 @@ concatenate and so on.
         operatingsystem         = <%= @operatingsystem  %>
         operatingsystemrelease  = <%= @operatingsystemrelease  %>
         ad_server               = <%= @ad_server  %>
-      
+
 
   #- : ALL EXCEPT root <%= @allowed_users_and_groups %> : ALL
    '),
@@ -38,7 +38,6 @@ concatenate and so on.
     }
 
     include epfl_sso::private::params
-
     include epfl_sso::private::pam
 
   }
