@@ -5,24 +5,17 @@
 # === Parameters:
 #
 /*
-
 class debug_with_path {
 
   notify { 'FqdnTest':
     withpath => true,
     name     => "my fqdn is ${::fqdn}",
   }
-
 }
 
 # notice: /Stage[main]/Not::Base/Notify[FqdnTest]/message: my fqdn is pcbtest.udlabs.private
 
-
 */
-
-
-
-
 
 class epfl_sso::private::s99_debugging {
 
@@ -35,20 +28,41 @@ class epfl_sso::private::s99_debugging {
       name     => "00 - my fqdn is ${::fqdn}",
             }
 
-    notify { 'fqdn.downcase':
+    notify { 'Fqdn.downcase':
       withpath => true,
       name     => "01 - my fqdn.downcase is ${::fqdn.downcase}",
             }
 
-    notify { 'servername':
+    notify { 'Server Name':
       withpath => true,
-      name     => "02 - my servernameis ${::servername}",
+      name     => "02 - my servername is ${::servername}",
             }
 
-    notify { 'serverip':
+    notify { 'Server IP':
       withpath => true,
-      name     => "03 - my serverip ${::serverip}",
+      name     => "03 - my server ip ${::serverip}",
             }
+
+    notify { 'is_dhcp':
+      withpath => true,
+      name     => "04 - is dhcp ${::is_dhcp}",
+            }
+
+    notify { '::networking':
+      withpath => true,
+      name     => "05 - is dhcp ${::networking}",
+            }
+
+    notify { '::networking[dhcp]':
+      withpath => true,
+      name     => "06 - is dhcp ${::networking}",
+                    }
+
+#
+# $is_dhcp = ($ and $)
+#
+
+
 
 
   include epfl_sso::private::params

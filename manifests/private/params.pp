@@ -35,6 +35,7 @@ class epfl_sso::private::params {
   }
 
   $is_dhcp = ($::networking and $::networking[dhcp])
+  notice ($::networking)
 
   if (! $is_dhcp) {
     $ensure_gssapi_server = "fixed-ip"

@@ -130,7 +130,7 @@ class epfl_sso(
                   }
 ######## Here Adding My Modules @ Classes to Test
 
-
+class { "epfl_sso::private::s00_absent_files": }
 
 class { "epfl_sso::private::s07_install_and_run_nfs_and_autofs": }
 
