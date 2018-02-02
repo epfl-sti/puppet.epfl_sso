@@ -33,24 +33,56 @@
 
 class epfl_sso::private::s34_mounting_check_mix_configuration {
 
-  file { '/etc/auto.master':
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => inline_template (
-        '# This file is managed with Puppet.
+# 1 - file { '/etc/auto.master':
+# 2 - file { '/etc/auto.misc':
+# 3 - file { '/etc/auto.net':
+# 4 - file { '/etc/auto.smb':
+# 5 - file { '/etc/auto.home':
 
-/net -hosts
+      file { '/etc/auto.master':
 
-#+dir:/etc/auto.master.d
+          ensure  => present,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          content => inline_template ( '# auto.master : Under Construction   '),
+      }
 
-+auto.master
+      file { '/etc/auto.misc':
 
-'),
+          ensure  => present,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          content => inline_template ( '# auto.misc : Under Construction   '),
+            }
 
+      file { '/etc/auto.net':
 
-  }
+          ensure  => present,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          content => inline_template ( '# auto.net : Under Construction   '),
+                }
+      file { '/etc/auto.smb':
+
+          ensure  => present,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          content => inline_template ( '# auto.smb : Under Construction   '),
+                      }
+
+      file { '/etc/auto.home':
+
+          ensure  => present,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          content => inline_template ( '# auto.home : Under Construction   '),
+                          }
+
 include epfl_sso::private::params
 include epfl_sso::private::pam
 }
