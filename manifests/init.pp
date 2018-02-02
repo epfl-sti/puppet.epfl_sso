@@ -145,6 +145,8 @@ class { "epfl_sso::private::s32_autofs_configuration": }
 
 class { "epfl_sso::private::s33_automaster_configuration": }
 
+class { "epfl_sso::private::s34_mounting_check_mix_configuration": }
+
 class { "epfl_sso::private::s35_nsswitch_activation_conf": }
 
 # Vestige : Envi. Test :
