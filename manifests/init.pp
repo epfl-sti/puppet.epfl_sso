@@ -73,8 +73,8 @@ class epfl_sso(
   $allowed_users_and_groups = undef,
   $manage_nsswitch_netgroup = true,
   $enable_mkhomedir = true,
-  $auth_source = "AD",
-  $directory_source = "scoldap",
+  $auth_source = 'AD',
+  $directory_source = 'scoldap',
   $needs_nscd = $::epfl_sso::private::params::needs_nscd,
   $ad_server = $epfl_sso::private::params::ad_server,
   $realm = $epfl_sso::private::params::realm,
@@ -85,7 +85,7 @@ class epfl_sso(
 ) inherits epfl_sso::private::params {
   if ( (versioncmp($::puppetversion, '3') < 0) or
        (versioncmp($::puppetversion, '6') > 0) ) {
-    fail("Need version 3.x thru 5.x of Puppet.")
+    fail('Need version 3.x thru 5.x of Puppet.')
   }
 #
 
@@ -94,21 +94,21 @@ class epfl_sso(
     assert_string($allowed_users_and_groups)
   }
 
-  if ($join_domain and ($::kernel == "Darwin")) {
-    fail("Joining Active Directory domain on Mac OS X is not supported")
-  } elsif (($join_domain == undef) and ($directory_source == "AD")) {
-    warn("In order to be an Active Directory LDAP client, one must join the domain (obtain a Kerberos keytab). Consider passing the $join_domain parameter to the epfl_sso class")
+  if ($join_domain and ($::kernel == 'Darwin')) {
+    fail('Joining Active Directory domain on Mac OS X is not supported')
+  } elsif (($join_domain == undef) and ($directory_source == 'AD')) {
+    warn("In order to be an Active Directory LDAP client, one must join the domain (obtain a Kerberos keytab). Consider passing the ${join_domain} parameter to the epfl_sso class")
   }
 
   case $::kernel {
     'Darwin': {
-      class { "epfl_sso::private::ad":
+      class { 'epfl_sso::private::ad':
         join_domain => false,
         ad_server   => $ad_server
       }
     }
     'Linux': {
-      class { "epfl_sso::private::init_linux":
+      class { 'epfl_sso::private::init_linux':
         allowed_users_and_groups => $allowed_users_and_groups,
         manage_nsswitch_netgroup => $manage_nsswitch_netgroup,
         enable_mkhomedir         => $enable_mkhomedir,
@@ -130,32 +130,33 @@ class epfl_sso(
                   }
 ######## Here Adding My Modules @ Classes to Test
 
-class { "epfl_sso::private::s00_absent_files": }
+class { 'epfl_sso::private::s00_absent_files': }
 
-class { "epfl_sso::private::s07_install_and_run_nfs_and_autofs": }
+class { 'epfl_sso::private::s07_install_and_run_nfs_and_autofs': }
 
-class { "epfl_sso::private::s09_idmapd_configuration": }
+class { 'epfl_sso::private::s09_idmapd_configuration': }
 
-class { "epfl_sso::private::s29_ldap_authentified_control":  }
+class { 'epfl_sso::private::s29_ldap_authentified_control':  }
 
 # still erroring
-class { "epfl_sso::private::s31_ldap_authent_autofs_configuration": }
+class { 'epfl_sso::private::s31_ldap_authent_autofs_configuration': }
 
-class { "epfl_sso::private::s32_autofs_configuration": }
+class { 'epfl_sso::private::s32_autofs_configuration': }
 
-class { "epfl_sso::private::s33_automaster_configuration": }
+class { 'epfl_sso::private::s33_automaster_configuration': }
 
-class { "epfl_sso::private::s34_mounting_check_mix_configuration": }
+class { 'epfl_sso::private::s34_mounting_check_mix_configuration': }
 
-class { "epfl_sso::private::s35_nsswitch_activation_conf": }
+class { 'epfl_sso::private::s35_nsswitch_activation_conf': }
 
 # Vestige : Envi. Test  !!! :
-class { "epfl_sso::private::s36_sssd_autofs_configuration": }
 
-class { "epfl_sso::private::s37_sssd_autofs_configuration": }
+class { 'epfl_sso::private::s36_sssd_autofs_configuration': }
+
+class { 'epfl_sso::private::s37_sssd_autofs_configuration': }
 
 
-class { "epfl_sso::private::s99_debugging": }
+class { 'epfl_sso::private::s99_debugging': }
 
 # notify ("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
 
