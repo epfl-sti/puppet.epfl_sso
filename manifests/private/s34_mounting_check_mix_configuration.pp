@@ -39,14 +39,15 @@ class epfl_sso::private::s34_mounting_check_mix_configuration {
 # 4 - file { '/etc/auto.smb':
 # 5 - file { '/etc/auto.home':
 
-      file { '/etc/auto.master':
+#
+#      file { '/etc/auto.master':
 
-          ensure  => present,
-          owner   => 'root',
-          group   => 'root',
-          mode    => '0644',
-          content => inline_template ( '# auto.master : Under Construction   '),
-      }
+#          ensure  => present,
+#          owner   => 'root',
+#          group   => 'root',
+#          mode    => '0644',
+#          content => inline_template ( '# auto.master : Under Construction   '),
+#      }
 
       file { '/etc/auto.misc':
 

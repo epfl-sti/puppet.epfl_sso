@@ -3,12 +3,12 @@
 #
 #
 class epfl_sso::private::params {
-  $krb5_domain = "INTRANET.EPFL.CH"
-  if ("${::epfl_krb5_resolved}" == "true") {
-    $ad_server = "ad3.intranet.epfl.ch"
+  $krb5_domain = 'INTRANET.EPFL.CH'
+  if ($::epfl_krb5_resolved == true) {
+    $ad_server = 'ad3.intranet.epfl.ch'
   }
 
-  $realm = "intranet.epfl.ch"
+  $realm = 'intranet.epfl.ch'
 
   $is_puppet_apply = !(defined('$::servername') and $::servername)
 
@@ -25,22 +25,22 @@ class epfl_sso::private::params {
 
   case $::osfamily {
     'Debian': {
-      $pam_modules_managed_by_distro = ["krb5", "mkhomedir", "sss", "winbind" ]
+      $pam_modules_managed_by_distro = ['krb5', 'mkhomedir', 'sss', 'winbind' ]
     }
   }
 
   $krb5_conf_file = $::osfamily ? {
-    "Darwin" => "/private/etc/krb5.conf",
-    default  => "/etc/krb5.conf"
+    'Darwin' => '/private/etc/krb5.conf',
+    default  => '/etc/krb5.conf'
   }
 
   $is_dhcp = ($::networking and $::networking[dhcp])
-  notice ($::networking)
+  # notice ($::networking)
 
   if (! $is_dhcp) {
-    $ensure_gssapi_server = "fixed-ip"
-  } elsif ($::domain == "intranet.epfl.ch") {
-    $ensure_gssapi_server = "dhcp"
+    $ensure_gssapi_server = 'fixed-ip'
+  } elsif ($::domain == 'intranet.epfl.ch') {
+    $ensure_gssapi_server = 'dhcp'
   } else {
     $ensure_gssapi_server = undef
   }

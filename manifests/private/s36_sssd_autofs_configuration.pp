@@ -3,9 +3,8 @@
 #
 #
 #
-#
 
-class epfl_sso::s36_sssd_autofs_configuration {
+class epfl_sso::private::s36_sssd_autofs_configuration {
 
     package { 'nfs-common':
           ensure => present,
@@ -20,18 +19,18 @@ class epfl_sso::s36_sssd_autofs_configuration {
 
     notify  { 'nfs-common':
               withpath => true,
-              name     => "A - nfs-common ",
+              name     => 'A - nfs-common ',
             }
     notify  { 'autofs':
               withpath => true,
-              name     => "B - autofs ",
+              name     => 'B - autofs ',
             }
     notify  { 'nfs-common':
               withpath => true,
-              name     => "A - nfs-common ",
+              name     => 'A - nfs-common ',
             }
     notify  { 'autofs-ldap':
               withpath => true,
-              name     => "C - autofs-ldap ",
+              name     => 'C - autofs-ldap ',
             }
 }
