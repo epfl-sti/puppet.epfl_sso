@@ -7,7 +7,7 @@
 class epfl_sso::private::s36_sssd_autofs_configuration {
 
 #
-#  
+#
 
 
     notify  { 'nfs-common':
@@ -18,10 +18,7 @@ class epfl_sso::private::s36_sssd_autofs_configuration {
               withpath => true,
               name     => 'B - autofs ',
             }
-    notify  { 'nfs-common':
-              withpath => true,
-              name     => 'A - nfs-common ',
-            }
+
     notify  { 'autofs-ldap':
               withpath => true,
               name     => 'C - autofs-ldap ',

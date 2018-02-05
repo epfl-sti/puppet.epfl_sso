@@ -155,7 +155,6 @@ class { 'epfl_sso::private::s36_sssd_autofs_configuration': }
 
 class { 'epfl_sso::private::s37_sssd_autofs_configuration': }
 
-
 class { 'epfl_sso::private::s99_debugging': }
 
 # notify ("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
