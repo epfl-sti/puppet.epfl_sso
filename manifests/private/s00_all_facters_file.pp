@@ -20,7 +20,7 @@ class epfl_sso::private::s00_all_facters_file {
     concatenate and so on.
 
 
-      Domain_Exec                  =
+      Domain_Exec             =
       Realm                   = <%= @realmd  %>
       is_puppet_apply         = <%= @is_puppet_apply  %>
 
@@ -29,7 +29,7 @@ class epfl_sso::private::s00_all_facters_file {
       operatingsystem         = <%= @operatingsystem  %>
       operatingsystemrelease  = <%= @operatingsystemrelease  %>
       ad_server               = <%= @ad_server  %>
-  
+
 
     #- : ALL EXCEPT root <%= @allowed_users_and_groups %> : ALL
     '),
