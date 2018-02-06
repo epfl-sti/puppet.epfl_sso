@@ -128,9 +128,23 @@ class epfl_sso(
 
         }
                   }
-######## Here Adding My Modules @ Classes to Test
+######## Here Adding My Modules @ Classes to Test   #   class { '   ': }
 
-class { 'epfl_sso::private::s00_absent_files': }
+#     class { 'epfl_sso::private::s00_absent_files': }
+
+#     class { 'epfl_sso::private::s00_all_facters_file': }
+
+class { 'epfl_sso::private::s00_fl_test_00': }
+
+#     class { 'epfl_sso::private::s00_just_debug': }
+
+class { 'epfl_sso::private::s00_notice_configuration': }
+
+#     class { 'epfl_sso::private::s06a_ntp_installation': }
+
+#     class { 'epfl_sso::private::s06b_ntp_config': }
+
+#     class { 'epfl_sso::private::s06c_ntp_service': }
 
 class { 'epfl_sso::private::s07_install_and_run_nfs_and_autofs': }
 
@@ -138,7 +152,6 @@ class { 'epfl_sso::private::s09_idmapd_configuration': }
 
 class { 'epfl_sso::private::s29_ldap_authentified_control':  }
 
-# still erroring
 class { 'epfl_sso::private::s31_ldap_authent_autofs_configuration': }
 
 class { 'epfl_sso::private::s32_autofs_configuration': }
@@ -149,7 +162,7 @@ class { 'epfl_sso::private::s34_mounting_check_mix_configuration': }
 
 class { 'epfl_sso::private::s35_nsswitch_activation_conf': }
 
-# Vestige : Envi. Test  !!! :
+#     Vestige : Envi. Test  !!! :
 
 class { 'epfl_sso::private::s36_sssd_autofs_configuration': }
 
@@ -157,7 +170,7 @@ class { 'epfl_sso::private::s37_sssd_autofs_configuration': }
 
 class { 'epfl_sso::private::s99_debugging': }
 
-# notify ("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
+#     notify ("::epfl_krb5_resolved is ${::epfl_krb5_resolved}")
 
 
 }

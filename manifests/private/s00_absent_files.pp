@@ -40,56 +40,56 @@ class epfl_sso::private::s00_absent_files {
       content => "From Puppet\n",
       mode    => '0644',
     }
-    file { '/etc/resolv.conf':
+  file { '/etc/resolv.conf':
       ensure  => 'present',
       replace => 'no', # this is the important property
       content => "From Puppet\n",
       mode    => '0644',
     }
 
-    file { '/etc/NetworkManager/NetworkManager':
+  file { '/etc/NetworkManager/NetworkManager':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s06     : /etc/ntp.conf
-      file { '/etc/back-ntp.conf':
+  file { '/etc/back-ntp.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s09     : /etc/realmd.conf
-      file { '/etc/realmd.conf':
+  file { '/etc/realmd.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s10     : /etc/idmapd.conf
-      file { '/etc/bak-idmapd.conf':
+  file { '/etc/bak-idmapd.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s10     : /etc/krb5.conf
-      file { '/etc/bak-krb5.conf':
+  file { '/etc/bak-krb5.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s12     : /etc/samba/smb.conf
-      file { '/etc/samba/smb.conf':
+  file { '/etc/samba/smb.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s13     : /etc/sssd/sssd.conf
-      file { '/etc/sssd/bak-sssd.conf':
+  file { '/etc/sssd/bak-sssd.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
@@ -110,63 +110,63 @@ class epfl_sso::private::s00_absent_files {
         mode    => '0644',
       }
       # s21     : /etc/default/nfs-common
-      file { '/etc/default/bak-nfs-common':
+  file { '/etc/default/bak-nfs-common':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s26     : /etc/fstab
-      file { '/etc/fstab':
+  file { '/etc/fstab':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s29     : /etc/ldap/ldap.conf
-      file { '/etc/ldap/bak-ldap.conf':
+  file { '/etc/ldap/bak-ldap.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s31     : /etc/autofs_ldap_auth.conf
-      file { '/etc/bak-autofs_ldap_auth.conf':
+  file { '/etc/bak-autofs_ldap_auth.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s32     : /etc/autofs.conf
-      file { '/etc/bak-autofs.conf':
+  file { '/etc/bak-autofs.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s33     : /etc/auto.master
-      file { '/etc/bak-auto.master':
+  file { '/etc/bak-auto.master':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s35     : /etc/nsswitch.conf
-      file { '/etc/bak2-nsswitch.conf':
+  file { '/etc/bak2-nsswitch.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s36     : /etc/default/autofs
-      file { '/etc/default/autofs':
+  file { '/etc/default/autofs':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",
         mode    => '0644',
       }
       # s37     : /etc/sssd/sssd.conf
-      file { '/etc/sssd/bak2-sssd.conf':
+  file { '/etc/sssd/bak2-sssd.conf':
         ensure  => 'present',
         replace => 'no', # this is the important property
         content => "From Puppet\n",

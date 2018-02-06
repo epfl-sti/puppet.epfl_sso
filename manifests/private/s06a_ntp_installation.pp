@@ -8,12 +8,12 @@
 #
 #Depending on OS, its  version and distribution, NOT yet treated
 #
-#
-#
-#
+#   class epfl_sso::private::s06a_ntp_installation {
 
 # == Class: ntp::install
-class ntp::install inherits ntp {
+
+
+class epfl_sso::private::s06a_ntp_installation inherits ntp {
 
   package { 'ntp':
     ensure => installed,

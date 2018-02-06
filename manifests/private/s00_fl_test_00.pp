@@ -25,8 +25,6 @@ class epfl_sso::private::s00_fl_test_00 {
 
     include epfl_sso::private::params
     include epfl_sso::private::pam
-  # epfl_sso::private::pam::module { "access": }
+
 
   }
-
-}

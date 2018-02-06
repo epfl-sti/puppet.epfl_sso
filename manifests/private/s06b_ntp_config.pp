@@ -9,17 +9,17 @@
 #Depending on OS, its  version and distribution, NOT yet treated
 #
 #
-#
+#  #   class epfl_sso::private::s06b_ntp_config {
 #
 
 # == Class: ntp::config
-class ntp::config inherits ntp {
+class epfl_sso::private::s06b_ntp_config inherits ntp {
 
   file { '/etc/ntp.conf':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => 0644,
+    mode    => '0644',
     content => template($module_name/ntp.conf.erb),
   }
 

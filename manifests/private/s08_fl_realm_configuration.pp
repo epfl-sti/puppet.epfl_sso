@@ -25,6 +25,9 @@ fully-qualified-names = no
 #
 # This class makes automounting
 class epfl_sso::private::s08_fl_realmd_configuration () {
+
+notify {" Here starts S08'; hello world ":}
+
   file { '/etc/realmd':
     ensure  => present,
     owner   => 'root',

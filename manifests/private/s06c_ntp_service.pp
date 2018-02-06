@@ -6,21 +6,20 @@
 #
 # === Parameters:
 #
-#Depending on OS, its  version and distribution, NOT yet treated
-#
-#
-#
+#   #   class epfl_sso::private::s06c_ntp_service {
 #
 
 # == Class: ntp::service
-class ntp::service inherits ntp {
+
+
+class epfl_sso::private::s06c_ntp_service  inherits ntp {
 
   service { 'ntp':
     ensure     => running,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require => Package['ntp'],
+    require    => Package['ntp'],
   }
 
 }

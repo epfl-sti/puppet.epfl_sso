@@ -14,8 +14,7 @@ class epfl_sso::private::s00_notice_configuration {
 
   file { '/etc/puppet/tmp/s00_notice_configuration.conf':
       ensure  => present,
-      content => inline_template(
-        '# This file is managed with Puppet.
+      content => inline_template('# This file is managed with Puppet.
 
 Here I try to print out all the content inside variables to handle them later,
 concatenate and so on.
