@@ -6,10 +6,6 @@
 
 class epfl_sso::private::s36_sssd_autofs_configuration {
 
-#
-#
-
-
     notify  { 'nfs-common':
               withpath => true,
               name     => 'A - nfs-common ',
