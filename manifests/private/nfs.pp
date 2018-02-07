@@ -35,7 +35,7 @@ class epfl_sso::private::nfs(
 
   ########### rpc.gssd configuration
 
-  anchor { "epfl_sso::nfs::rpc_gssd_configured": }
+  anchor { "epfl_sso::private::nfs::rpc_gssd_configured": }
 
   if ($::operatingsystem == "Ubuntu" and
       $::operatingsystemrelease >= "16.04") {
@@ -50,12 +50,12 @@ class epfl_sso::private::nfs(
     } ~> exec { "systemctl daemon-reload; systemctl restart nfs-config.service":
       path => $::path,
       refreshonly => true
-    } -> Anchor["epfl_sso::nfs::rpc_gssd_configured"]
+    } -> Anchor["epfl_sso::private::nfs::rpc_gssd_configured"]
   }
 
   ensure_packages($rpc_gssd_package)
     
-  Anchor["epfl_sso::nfs::rpc_gssd_configured"] ->
+  Anchor["epfl_sso::private::nfs::rpc_gssd_configured"] ->
   service { "rpc-gssd":
       ensure => $client_ensure ? {
         "present" => "running",
