@@ -61,12 +61,19 @@ class epfl_sso::private::ldap(
       match => "^#?URI",
       ensure => "present"
     }
+    # Both [Durrer] and
     # http://www-01.ibm.com/support/docview.wss?uid=swg21578299
-    file_line { "sasl_secprops in ${ldap_conf_path}":
-      path => $ldap_conf_path,
-      line => "sasl_secprops maxssf=0",
-      match => "^#?sasl_secprops",
-      ensure => "present"
+    # recommend to put this, and indeed it lets one use ldapsearch
+    # without any parameters besides the search predicate.
+    # Unfortunately this makes msktutil fail
+    # (https://serverfault.com/a/799734/109290):
+    if (false) {
+      file_line { "sasl_secprops in ${ldap_conf_path}":
+        path => $ldap_conf_path,
+        line => "sasl_secprops maxssf=0",
+        match => "^#?sasl_secprops",
+        ensure => "present"
+      }
     }
 
     if ($::osfamily == "RedHat") {
