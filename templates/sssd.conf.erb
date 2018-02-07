@@ -35,11 +35,9 @@ ldap_uri = ldap://<%= @ad_server %>/
 ldap_sasl_mech = gssapi
 ldap_schema = ad
 ldap_account_expire_policy = ad
-<%- if ! @use_test_ad -%>
 ldap_user_search_base = DC=intranet,DC=epfl,DC=ch
 ldap_group_search_base = OU=AppGroups,DC=intranet,DC=epfl,DC=ch???OU=UnitGroups,DC=intranet,DC=epfl,DC=ch??
 ldap_use_tokengroups = false
-<%- end -%>
 ldap_force_upper_case_realm = true
 
 <% else %>

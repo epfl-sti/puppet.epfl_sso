@@ -1,15 +1,10 @@
 class epfl_sso::private::params {
   $krb5_domain = "INTRANET.EPFL.CH"
-  if ("${::epfl_test_krb5_resolved}" == "true") {
-    $ad_server = "idevingtladdc2.idevingtladf2.loc"
-  } elsif ("${::epfl_krb5_resolved}" == "true") {
-    $ad_server = "ad3.intranet.epfl.ch"
+  if ("${::epfl_krb5_resolved}" != "true") {
+    fail("Couldn't resolve the Kerberos domain controller for ${krb5_domain} - Something might be wrong with your DNS server settings")
   }
-  $use_test_ad = ($ad_server =~ /idevingtladf2.loc/)
-  $realm = $use_test_ad ? {
-    true  => "idevingtladf2.loc",
-    false => "intranet.epfl.ch"
-  }
+  $ad_server = "ad3.intranet.epfl.ch"
+  $realm = "intranet.epfl.ch"
 
   $is_puppet_apply = !(defined('$::servername') and $::servername)
 

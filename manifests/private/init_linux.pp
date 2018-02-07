@@ -9,7 +9,6 @@ class epfl_sso::private::init_linux(
   $needs_nscd,
   $ad_server,
   $realm,
-  $use_test_ad,
   $join_domain,
   $renew_domain_credentials,
   $sshd_gssapi_auth,
@@ -88,8 +87,7 @@ class epfl_sso::private::init_linux(
       join_domain              => $join_domain,
       renew_domain_credentials => $renew_domain_credentials,
       ad_server                => $ad_server,
-      realm                    => $realm,
-      use_test_ad              => $use_test_ad
+      realm                    => $realm
     }
   }
 

@@ -18,24 +18,12 @@ admin_server = intranet.epfl.ch:749
 default_domain = intranet.epfl.ch
 }
 
-<%- if @use_test_ad -%>
-IDEVINGTLADF2.LOC = {
-kdc = idevingtladdc2.idevingtladf2.loc:88
-default_domain = idevingtladf2.loc
-}
-<%- end -%>
-
 [domain_realm]
 .intranet.epfl.ch = INTRANET.EPFL.CH
 intranet.epfl.ch = INTRANET.EPFL.CH
 
 .epfl.ch = INTRANET.EPFL.CH
 epfl.ch = INTRANET.EPFL.CH
-
-<%- if @use_test_ad -%>
-.idevingtladf2.loc = IDEVINGTLADF2.LOC
-idevingtladf2.loc = IDEVINGTLADF2.LOC
-<%- end -%>
 
 [appdefaults]
 pam = {
