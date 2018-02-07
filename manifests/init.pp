@@ -16,7 +16,7 @@
 # $enable_mkhomedir::          Whether to automatically create users' home
 #                              directories upon first login
 #
-# $home_automounts::           Whether to use the auto.home automount map
+# $ad_automount_home::         Whether to use the auto.home automount map
 #                              from Active Directory. Requires
 #                              $directory_source == "AD"; mutually exclusive
 #                              with $enable_mkhomedir. Set this to false
@@ -87,7 +87,7 @@ class epfl_sso(
   $allowed_users_and_groups = undef,
   $manage_nsswitch_netgroup = true,
   $enable_mkhomedir = undef,
-  $home_automounts = false,
+  $ad_automount_home = false,
   $auth_source = "AD",
   $directory_source = "scoldap",
   $needs_nscd = $::epfl_sso::private::params::needs_nscd,
@@ -111,16 +111,16 @@ class epfl_sso(
   }
 
   if ($enable_mkhomedir != undef) {
-    if ($enable_mkhomedir and $home_automounts) {
-      fail('$enable_mkhomedir and $home_automounts are incompatible with each other!')
+    if ($enable_mkhomedir and $ad_automount_home) {
+      fail('$enable_mkhomedir and $ad_automount_home are incompatible with each other!')
     }
     $_do_enable_mkhomedir = $enable_mkhomedir
   } else {
     $_do_enable_mkhomedir = ($directory_source != "AD")
   }
 
-  if ($home_automounts and $directory_source != "AD") {
-    fail('$home_automounts requires $directory_source == "AD"')
+  if ($ad_automount_home and $directory_source != "AD") {
+    fail('$ad_automount_home requires $directory_source == "AD"')
   }
 
   if (($join_domain == undef) and ($directory_source == "AD")) {
@@ -135,7 +135,7 @@ class epfl_sso(
       if ($enable_mkhomedir) {
         fail("mkhomedir is not supported on Mac OS X")
       }
-      if ($home_automounts) {
+      if ($ad_automount_home) {
         fail("Home automounts are not supported on Mac OS X")
       }
       class { "epfl_sso::private::ad":
@@ -148,7 +148,7 @@ class epfl_sso(
         allowed_users_and_groups => $allowed_users_and_groups,
         manage_nsswitch_netgroup => $manage_nsswitch_netgroup,
         enable_mkhomedir         => $_do_enable_mkhomedir,
-        home_automounts          => $home_automounts,
+        ad_automount_home          => $ad_automount_home,
         auth_source              => $auth_source,
         directory_source         => $directory_source,
         needs_nscd               => $needs_nscd,

@@ -8,7 +8,7 @@
 [sssd]
 config_file_version = 2
 domains = <%= @realm %>
-<% if @home_automounts %>
+<% if @ad_automount_home %>
 services = nss, pam, autofs
 <% else %>
 services = nss, pam
@@ -22,7 +22,7 @@ services = nss, pam
 [pam]
 <%= @debug_sssd ? "debug_level = 9" : "" %>
 
-<% if @home_automounts %>
+<% if @ad_automount_home %>
 [autofs]
 <%= @debug_sssd ? "debug_level = 9" : "" %>
 <% end %>
@@ -71,7 +71,7 @@ krb5_server = <%= @realm.downcase %>
 # Probably required with sssd 1.8.x and newer
 krb5_canonicalize = false
 
-<% if @home_automounts %>
+<% if @ad_automount_home %>
 ldap_autofs_search_base = OU=automaps,<%= @ad_server_base_dn %>
 ldap_autofs_map_object_class = automountMap
 ldap_autofs_map_name = automountMapName

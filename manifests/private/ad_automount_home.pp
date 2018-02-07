@@ -6,7 +6,7 @@
 # Prod et Automap Home mode LDAP", L. Durrer,
 # https://sico.epfl.ch:8443/pages/viewpage.action?spaceKey=SIAC&title=IDEVING
 
-class epfl_sso::private::home_automounts(
+class epfl_sso::private::ad_automount_home(
   $autofs_deps                = $::epfl_sso::private::params::autofs_deps,
   $autofs_service             = $::epfl_sso::private::params::autofs_service,
   $krb5_domain                = $::epfl_sso::private::params::krb5_domain,

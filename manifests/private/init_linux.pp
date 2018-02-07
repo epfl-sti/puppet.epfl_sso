@@ -4,7 +4,7 @@ class epfl_sso::private::init_linux(
   $allowed_users_and_groups,
   $manage_nsswitch_netgroup,
   $enable_mkhomedir,
-  $home_automounts,
+  $ad_automount_home,
   $auth_source,
   $directory_source,
   $needs_nscd,
@@ -106,10 +106,10 @@ class epfl_sso::private::init_linux(
     }
   }
 
-  if ($home_automounts) {
+  if ($ad_automount_home) {
     class { "epfl_sso::private::nfs":
       debug_gssd => $debug_gssd,
     }
-    class { "epfl_sso::private::home_automounts": }
+    class { "epfl_sso::private::ad_automount_home": }
   }
 }
