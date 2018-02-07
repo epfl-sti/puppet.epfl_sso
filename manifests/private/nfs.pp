@@ -7,8 +7,7 @@
 #
 # $server_ensure::             Either "present" or "absent"
 # $client_ensure::             Either "present" or "absent"
-# $debug::                     A dict of debug topics as keys (value must be
-#                              truthy, but is otherwise irrelevant)
+# $debug_gssd::                Whether to put rpc.gssd in debug mode
 #
 # === Actions:
 #
@@ -29,7 +28,7 @@
 class epfl_sso::private::nfs(
   $server_ensure = "present",
   $client_ensure = "present",
-  $debug = {},
+  $debug_gssd = false,
   $krb5_domain = $::epfl_sso::private::params::krb5_domain
 ) inherits epfl_sso::private::params {
 
@@ -47,9 +46,40 @@ class epfl_sso::private::nfs(
         default   => "NEED_GSSD="
       },
       match => "^NEED_GSSD"
-    } ~> exec { "systemctl daemon-reload; systemctl restart nfs-config.service":
+    } ~> Exec["regenerate-nfs-config"]
+
+    if ($::has_ubuntu_bug_1023051) {
+      file { "/etc/systemd/system/rpc-gssd.service.d":
+        ensure => "directory"
+      } ->
+      file { "/etc/systemd/system/rpc-gssd.service.d/env.conf":
+        content => inline_template('# Managed by Puppet, DO NOT EDIT
+<% if @debug_gssd %>
+[Service]
+Environment="GSSDARGS=-r -r -r -v -v -v"
+<% end %>
+')
+      } ~> Exec["regenerate-nfs-config"]
+    } else {
+      if ($debug_gssd) {
+        $_gssdargs_ensure = "present"
+      } else {
+        $_gssdargs_ensure = "absent"
+      }
+      file_line { "RPCGSSDARGS in /etc/default/nfs-common":
+        path => "/etc/default/nfs-common",
+        line => $_gssdargs_ensure ? {
+          "present" => "RPCGSSDARGS='-r -r -r -v -v -v'",
+          default   => "RPCGSSDARGS="
+        },
+        match => "^RPCGSSDARGS="
+      } ~> Exec["regenerate-nfs-config"]
+    }
+
+    exec { "regenerate-nfs-config":
+      command => "systemctl daemon-reload; systemctl restart nfs-config.service; systemctl restart rpc-gssd.service",
       path => $::path,
-      refreshonly => true
+      refreshonly => true,
     } -> Anchor["epfl_sso::private::nfs::rpc_gssd_configured"]
   }
 

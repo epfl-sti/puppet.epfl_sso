@@ -40,11 +40,12 @@ auth_conf_file = "<%= @autofs_ldap_auth_conf_path %>"
 
   # [Durrer], p. 45
   file { $autofs_ldap_auth_conf_path:
-    content => inline_template('# Managed by Puppet, DO NOT EDIT.
-
+    content => inline_template('
 <?xml version="1.0" ?>
 <!--
-This files contains a single entry with multiple attributes tied to it. See autofs_ldap_auth.conf(5) for more information.
+Managed by Puppet, DO NOT EDIT.
+
+See autofs_ldap_auth.conf(5) for more information.
 -->
 <autofs_ldap_sasl_conf usetls="no" tlsrequired="no"
   authrequired="yes" authtype="GSSAPI" clientprinc="host/<%= @fqdn %>@<%= @krb5_domain %>"

@@ -14,6 +14,7 @@ class epfl_sso::private::init_linux(
   $join_domain,
   $renew_domain_credentials,
   $sshd_gssapi_auth,
+  $debug_gssd,
   $debug_sssd
 ) {
   ensure_resource('class', 'quirks')
@@ -106,7 +107,9 @@ class epfl_sso::private::init_linux(
   }
 
   if ($home_automounts) {
-    class { "epfl_sso::private::nfs": }
+    class { "epfl_sso::private::nfs":
+      debug_gssd => $debug_gssd,
+    }
     class { "epfl_sso::private::home_automounts": }
   }
 }

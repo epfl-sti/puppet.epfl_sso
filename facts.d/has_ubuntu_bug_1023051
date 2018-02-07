@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if grep -w GSSDARGS /usr/lib/systemd/scripts/nfs-utils_env.sh >/dev/null 2>&1; then
+    echo has_ubuntu_bug_1023051=true
+else
+    echo has_ubuntu_bug_1023051=false
+fi

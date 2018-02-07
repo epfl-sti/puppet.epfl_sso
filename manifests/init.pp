@@ -59,6 +59,8 @@
 #                        Kerberos authentication. See epfl_sso::private::sshd
 #                        for the required client-side configuration
 #
+# $debug_gssd::          Turn extra debugging on in rpc.gssd if true
+#
 # $debug_sssd::          Turn extra debugging on in sssd if true
 #
 # === Actions:
@@ -95,6 +97,7 @@ class epfl_sso(
   $join_domain = undef,
   $renew_domain_credentials = true,
   $sshd_gssapi_auth = undef,
+  $debug_gssd = undef,
   $debug_sssd = undef
 ) inherits epfl_sso::private::params {
   if ( (versioncmp($::puppetversion, '3') < 0) or
@@ -155,6 +158,7 @@ class epfl_sso(
         join_domain              => $join_domain,
         renew_domain_credentials => $renew_domain_credentials,
         sshd_gssapi_auth         => $sshd_gssapi_auth,
+        debug_gssd               => $debug_gssd,
         debug_sssd               => $debug_sssd
       }
     }
