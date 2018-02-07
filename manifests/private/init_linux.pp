@@ -54,6 +54,7 @@ class epfl_sso::private::init_linux(
 
   if ($allowed_users_and_groups != undef) {
     class { 'epfl_sso::private::access':
+      directory_source         => $directory_source,
       allowed_users_and_groups => $allowed_users_and_groups
     }
   }

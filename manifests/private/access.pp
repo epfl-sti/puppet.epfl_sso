@@ -4,15 +4,18 @@
 #
 # === Parameters:
 #
+# $directory_source::          Either "AD" or "scoldap"
+#
 # $allowed_users_and_groups::  access.conf(5)-style ACL, e.g. "user1 user2 (group1) (group2)"
 class epfl_sso::private::access(
+  $directory_source,
   $allowed_users_and_groups = '',
   ) {
   file { '/etc/security/access.conf':
     ensure  => present,
     content => inline_template('# This file is managed with Puppet.
 
-- : ALL EXCEPT root <%= @allowed_users_and_groups %> : ALL
+- : ALL EXCEPT root <%= @directory_source == "scoldap" ? @allowed_users_and_groups.downcase : @allowed_users_and_groups %> : ALL
 '),
     owner   => root,
     group   => root,
