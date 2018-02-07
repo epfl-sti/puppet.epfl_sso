@@ -20,7 +20,7 @@
 #
 # * Ensure that rpc.idmapd is *not* running
   
-class epfl_sso::nfs(
+class epfl_sso::private::nfs(
   $server_ensure = "present",
   $client_ensure = "present",
   $debug = {},

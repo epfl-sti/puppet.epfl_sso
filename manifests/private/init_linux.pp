@@ -99,7 +99,7 @@ class epfl_sso::private::init_linux(
   }
 
   if ($home_automounts) {
-    class { "epfl_sso::private::home_automounts":
-    }
+    class { "epfl_sso::private::nfs": }
+    class { "epfl_sso::private::home_automounts": }
   }
 }
