@@ -41,4 +41,20 @@ class epfl_sso::private::params {
   }
 
   $manage_samba_secrets = any2bool($::has_net_changesecretpw)
+  case $::osfamily {
+    "Debian": {
+      $rpc_gssd_package = "nfs-common"
+      $request_key_path = "/sbin/request-key"
+      $nfsidmap_path = "/usr/sbin/nfsidmap"
+      $request_key_package = "keyutils"
+      $nfsidmap_package = "nfs-common"
+    }
+    "RedHat": {
+      $rpc_gssd_package = "nfs-utils"
+      $request_key_path = "/usr/sbin/request-key"
+      $nfsidmap_path = "/usr/sbin/nfsidmap"
+      $request_key_package = "keyutils"
+      $nfsidmap_package = "nfs-utils"
+    }
+  }
 }

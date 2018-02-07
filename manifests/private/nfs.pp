@@ -31,7 +31,7 @@ class epfl_sso::private::nfs(
   $client_ensure = "present",
   $debug = {},
   $krb5_domain = $::epfl_sso::private::params::krb5_domain
-) inherits epfl_sso::private::nfs::params {
+) inherits epfl_sso::private::params {
 
   ########### rpc.gssd configuration
 
