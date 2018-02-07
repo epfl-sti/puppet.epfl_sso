@@ -8,7 +8,12 @@
 [sssd]
 config_file_version = 2
 domains = <%= @realm %>
+<% if @home_automounts %>
+services = nss, pam, autofs
+<% else %>
 services = nss, pam
+<% end %>
+
 <%= @debug_sssd ? "debug_level = 9" : "" %>
 
 [nss]
@@ -17,8 +22,13 @@ services = nss, pam
 [pam]
 <%= @debug_sssd ? "debug_level = 9" : "" %>
 
-[domain/<%= @realm.downcase %>]
+<% if @home_automounts %>
+[autofs]
 <%= @debug_sssd ? "debug_level = 9" : "" %>
+<% end %>
+
+[domain/<%= @realm.downcase %>]
+<%= @debug_sssd ? "debug_level = 0x0FF0" : "" %>
 
 ldap_referrals = false
 enumerate = false
@@ -35,8 +45,8 @@ ldap_uri = ldap://<%= @ad_server %>/
 ldap_sasl_mech = gssapi
 ldap_schema = ad
 ldap_account_expire_policy = ad
-ldap_user_search_base = DC=intranet,DC=epfl,DC=ch
-ldap_group_search_base = OU=AppGroups,DC=intranet,DC=epfl,DC=ch???OU=UnitGroups,DC=intranet,DC=epfl,DC=ch??
+ldap_user_search_base = <%= @ad_server_base_dn %>
+ldap_group_search_base = OU=AppGroups,<%= @ad_server_base_dn %>???OU=UnitGroups,<%= @ad_server_base_dn %>??
 ldap_use_tokengroups = false
 ldap_force_upper_case_realm = true
 
@@ -61,3 +71,11 @@ krb5_server = <%= @realm.downcase %>
 # Probably required with sssd 1.8.x and newer
 krb5_canonicalize = false
 
+<% if @home_automounts %>
+ldap_autofs_search_base = OU=automaps,<%= @ad_server_base_dn %>
+ldap_autofs_map_object_class = automountMap
+ldap_autofs_map_name = automountMapName
+ldap_autofs_entry_object_class = automount
+ldap_autofs_entry_key = cn
+ldap_autofs_entry_value = automountInformation
+<% end %>

@@ -27,6 +27,10 @@
 # $needs_nscd::                Whether to install nscd to serve as a second
 #                              layer of cache (for old distros with slow sssd)
 #
+# $ad_server::                 The multi-homed DNS name of the Active Directory server
+#
+# $ad_server_base_dn::         The Base DN of the Active Directory LDAP tree
+#
 # $auth_source::               Either "AD" or "scoldap"
 #
 # $directory_source::          Either "AD" or "scoldap"
@@ -86,6 +90,7 @@ class epfl_sso(
   $directory_source = "scoldap",
   $needs_nscd = $::epfl_sso::private::params::needs_nscd,
   $ad_server = $epfl_sso::private::params::ad_server,
+  $ad_server_base_dn = $epfl_sso::private::params::ad_server_base_dn,
   $realm = $epfl_sso::private::params::realm,
   $join_domain = undef,
   $renew_domain_credentials = true,
@@ -145,6 +150,7 @@ class epfl_sso(
         directory_source         => $directory_source,
         needs_nscd               => $needs_nscd,
         ad_server                => $ad_server,
+        ad_server_base_dn        => $ad_server_base_dn,
         realm                    => $realm,
         join_domain              => $join_domain,
         renew_domain_credentials => $renew_domain_credentials,

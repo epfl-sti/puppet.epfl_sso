@@ -9,6 +9,7 @@ class epfl_sso::private::init_linux(
   $directory_source,
   $needs_nscd,
   $ad_server,
+  $ad_server_base_dn,
   $realm,
   $join_domain,
   $renew_domain_credentials,
@@ -29,8 +30,8 @@ class epfl_sso::private::init_linux(
   file { '/etc/sssd/sssd.conf' :
     ensure  => present,
     content => template('epfl_sso/sssd.conf.erb'),
-    # The template above uses variables $debug_sssd, $auth_source and
-    # $ad_server
+    # The template above uses variables $debug_sssd, $auth_source,
+    # $ad_server and $ad_server_base_dn
     owner   => root,
     group   => root,
     mode    => '0600'

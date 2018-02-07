@@ -64,4 +64,16 @@ class epfl_sso::private::params {
       $ldap_conf_path = "/etc/openldap/ldap.conf"
     }
   }
+
+  case $::osfamily {
+    "Debian": {
+      $autofs_deps = ["autofs", "autofs-ldap"]
+    }
+    "RedHat": {
+      $autofs_deps = ["autofs"]
+    }
+  }
+
+  $autofs_conf_path = "/etc/autofs.conf"
+  $autofs_ldap_auth_conf_path = "/etc/autofs_ldap_auth.conf"
 }
