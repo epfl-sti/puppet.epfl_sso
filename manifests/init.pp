@@ -16,6 +16,14 @@
 # $enable_mkhomedir::          Whether to automatically create users' home
 #                              directories upon first login
 #
+# $home_automounts::           Whether to use the auto.home automount map
+#                              from Active Directory. Requires
+#                              $directory_source == "AD"; mutually exclusive
+#                              with $enable_mkhomedir. Set this to false
+#                              either if the homes are to be local, or the
+#                              automount map is managed by some other
+#                              mechanism.
+#
 # $needs_nscd::                Whether to install nscd to serve as a second
 #                              layer of cache (for old distros with slow sssd)
 #
@@ -72,7 +80,8 @@
 class epfl_sso(
   $allowed_users_and_groups = undef,
   $manage_nsswitch_netgroup = true,
-  $enable_mkhomedir = true,
+  $enable_mkhomedir = undef,
+  $home_automounts = false,
   $auth_source = "AD",
   $directory_source = "scoldap",
   $needs_nscd = $::epfl_sso::private::params::needs_nscd,
@@ -93,14 +102,34 @@ class epfl_sso(
     assert_string($allowed_users_and_groups)
   }
 
-  if ($join_domain and ($::kernel == "Darwin")) {
-    fail("Joining Active Directory domain on Mac OS X is not supported")
-  } elsif (($join_domain == undef) and ($directory_source == "AD")) {
+  if ($enable_mkhomedir != undef) {
+    if ($enable_mkhomedir and $home_automounts) {
+      fail('$enable_mkhomedir and $home_automounts are incompatible with each other!')
+    }
+    $_do_enable_mkhomedir = $enable_mkhomedir
+  } else {
+    $_do_enable_mkhomedir = ($directory_source != "AD")
+  }
+
+  if ($manage_auto_home and $directory_source != "AD") {
+    fail('$manage_auto_home requires $directory_source == "AD"')
+  }
+
+  if (($join_domain == undef) and ($directory_source == "AD")) {
     warn("In order to be an Active Directory LDAP client, one must join the domain (obtain a Kerberos keytab). Consider passing the $join_domain parameter to the epfl_sso class")
   }
 
   case $::kernel {
     'Darwin': {
+      if ($join_domain) {
+        fail("Joining Active Directory domain on Mac OS X is not supported")
+      }
+      if ($enable_mkhomedir) {
+        fail("mkhomedir is not supported on Mac OS X")
+      }
+      if ($home_automounts) {
+        fail("Home automounts are not supported on Mac OS X")
+      }
       class { "epfl_sso::private::ad":
         join_domain => false,
         ad_server   => $ad_server
@@ -110,7 +139,8 @@ class epfl_sso(
       class { "epfl_sso::private::init_linux":
         allowed_users_and_groups => $allowed_users_and_groups,
         manage_nsswitch_netgroup => $manage_nsswitch_netgroup,
-        enable_mkhomedir         => $enable_mkhomedir,
+        enable_mkhomedir         => $_do_enable_mkhomedir,
+        home_automounts          => $home_automounts,
         auth_source              => $auth_source,
         directory_source         => $directory_source,
         needs_nscd               => $needs_nscd,

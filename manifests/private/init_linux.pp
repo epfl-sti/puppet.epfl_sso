@@ -4,6 +4,7 @@ class epfl_sso::private::init_linux(
   $allowed_users_and_groups,
   $manage_nsswitch_netgroup,
   $enable_mkhomedir,
+  $home_automounts,
   $auth_source,
   $directory_source,
   $needs_nscd,
@@ -94,6 +95,11 @@ class epfl_sso::private::init_linux(
   if ($sshd_gssapi_auth != undef) {
     class { "epfl_sso::private::sshd":
       enable_gssapi => $sshd_gssapi_auth
+    }
+  }
+
+  if ($home_automounts) {
+    class { "epfl_sso::private::home_automounts":
     }
   }
 }
