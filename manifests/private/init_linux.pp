@@ -78,7 +78,12 @@ class epfl_sso::private::init_linux(
   }
 
   if ($enable_mkhomedir) {
-    class { 'epfl_sso::private::mkhomedir': }
+    $_mkhomedir_ensure = "present"
+  } else {
+    $_mkhomedir_ensure = "absent"
+  }
+  class { 'epfl_sso::private::mkhomedir':
+    ensure => $_mkhomedir_ensure
   }
 
   epfl_sso::private::pam::module { "winbind":
