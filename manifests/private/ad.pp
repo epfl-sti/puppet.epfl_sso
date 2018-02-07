@@ -26,8 +26,8 @@
 #                subsequently run as.
 #
 # $manage_samba_secrets::  Whether to pass --set-samba-secret to msktutil.
-#                          Requires a working, properly configured Samba
-#                          installation.
+#                          Has no effect absent a working, properly configured
+#                          Samba installation.
 #
 # $renew_domain_credentials:: Whether to periodically renew the
 #                Kerberos keytab entry. Has no effect under "puppet
@@ -37,7 +37,7 @@
 #
 # $ad_server::   The Active Directory server to use
 #
-# $realm::       
+# $realm::       The Active Directory realm to use
 #
 # $epflca_cert_url:: Where to find the certificate for the EPFL CA
 #                (necessary for ldapsearch to work)
