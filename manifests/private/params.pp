@@ -41,6 +41,11 @@ class epfl_sso::private::params {
   }
 
   $manage_samba_secrets = any2bool($::has_net_changesecretpw)
+
+  $ad_server_urls = "ldaps://ad1.intranet.epfl.ch:3269 ldaps://ad2.intranet.epfl.ch:3269 ldaps://ad3.intranet.epfl.ch:3269 ldaps://ad4.intranet.epfl.ch:3269 ldaps://ad5.intranet.epfl.ch:3269 ldap://ad6.intranet.epfl.ch:3269"
+
+  $ad_server_base_dn = "DC=intranet,DC=epfl,DC=ch"
+
   case $::osfamily {
     "Debian": {
       $rpc_gssd_package = "nfs-common"
@@ -48,6 +53,7 @@ class epfl_sso::private::params {
       $nfsidmap_path = "/usr/sbin/nfsidmap"
       $request_key_package = "keyutils"
       $nfsidmap_package = "nfs-common"
+      $ldap_conf_path = "/etc/ldap/ldap.conf"
     }
     "RedHat": {
       $rpc_gssd_package = "nfs-utils"
@@ -55,6 +61,7 @@ class epfl_sso::private::params {
       $nfsidmap_path = "/usr/sbin/nfsidmap"
       $request_key_package = "keyutils"
       $nfsidmap_package = "nfs-utils"
+      $ldap_conf_path = "/etc/openldap/ldap.conf"
     }
   }
 }

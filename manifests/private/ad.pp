@@ -25,6 +25,9 @@
 #                as the same user (typically root) as Puppet is
 #                subsequently run as.
 #
+# $manage_ldap_conf::  Whether to set the Active Directory servers as
+#                      the default LDAP servers in ldap.conf
+#
 # $manage_samba_secrets::  Whether to pass --set-samba-secret to msktutil.
 #                          Has no effect absent a working, properly configured
 #                          Samba installation.
@@ -70,6 +73,7 @@ class epfl_sso::private::ad(
   $ad_server,
   $realm,
   $join_domain,
+  $manage_ldap_conf = true,
   $manage_samba_secrets = $epfl_sso::private::params::manage_samba_secrets,
   $epflca_cert_url = 'http://certauth.epfl.ch/epflca.cer',
   $renew_domain_credentials = true,
@@ -92,7 +96,9 @@ class epfl_sso::private::ad(
   epfl_sso::private::ad::etchosts_line { "ad5": ip => "128.178.15.231" }
   epfl_sso::private::ad::etchosts_line { "ad6": ip => "128.178.15.232" }
 
-  include epfl_sso::private::ldap
+  class { "epfl_sso::private::ldap":
+    manage_ldap_conf => $manage_ldap_conf,
+  }
   epfl_sso::private::ldap::trusted_ca_cert { 'epfl':
     url => $epflca_cert_url,
     ensure => 'present'

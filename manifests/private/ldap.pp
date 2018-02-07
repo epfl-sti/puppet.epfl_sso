@@ -1,5 +1,22 @@
 # Manage client-side LDAP configuration and certificates
-class epfl_sso::private::ldap {
+#
+# === Parameters:
+#
+# $manage_ldap_conf::  Whether to set the Active Directory servers as
+#                      the default LDAP servers in ldap.conf
+#
+# $ldap_conf_path::  Path to ldap.conf file
+#
+# $ad_server_urls::   The Active Directory server to use
+#
+# $ad_server_base_dn::  Base DN to set in ldap.conf
+#
+class epfl_sso::private::ldap(
+  $manage_ldap_conf,
+  $ldap_conf_path    = $::epfl_sso::private::params::ldap_conf_path,
+  $ad_server_urls    = $::epfl_sso::private::params::ad_server_urls,
+  $ad_server_base_dn = $::epfl_sso::private::params::ad_server_base_dn
+) inherits epfl_sso::private::params {
   anchor { "epfl_sso::private::ldap::tools_installed": }
   if ($::kernel == 'Linux') {
     # Mac OS X has curl by default
@@ -30,6 +47,38 @@ class epfl_sso::private::ldap {
       fail("Not sure how to wrangle LDAP configuration on ${::osfamily}")
     }
   }  # case $::osfamily
+
+  if ($manage_ldap_conf) {
+    file_line { "BASE in ${ldap_conf_path}":
+      path => $ldap_conf_path,
+      line => "BASE ${ad_server_base_dn}",
+      match => "^#?BASE",
+      ensure => "present"
+    }
+    file_line { "URI in ${ldap_conf_path}":
+      path => $ldap_conf_path,
+      line => "URI ${ad_server_urls}",
+      match => "^#?URI",
+      ensure => "present"
+    }
+    # http://www-01.ibm.com/support/docview.wss?uid=swg21578299
+    file_line { "sasl_secprops in ${ldap_conf_path}":
+      path => $ldap_conf_path,
+      line => "sasl_secprops maxssf=0",
+      match => "^#?sasl_secprops",
+      ensure => "present"
+    }
+
+    if ($::osfamily == "RedHat") {
+      # https://bugzilla.redhat.com/show_bug.cgi?id=949864
+      file_line { "SASL_NOCANON in ${ldap_conf_path}":
+        path => $ldap_conf_path,
+        line => "SASL_NOCANON on",
+        match => "^#?SASL_NOCANON",
+        ensure => "present"
+      }
+    }
+  }
 
   # Trust / untrust a certificate for the purpose of LDAP client traffic
   # On some platforms (Debian, Mac OS X), the trust is actually extended / revoked
