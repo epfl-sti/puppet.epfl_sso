@@ -111,8 +111,8 @@ class epfl_sso(
     $_do_enable_mkhomedir = ($directory_source != "AD")
   }
 
-  if ($manage_auto_home and $directory_source != "AD") {
-    fail('$manage_auto_home requires $directory_source == "AD"')
+  if ($home_automounts and $directory_source != "AD") {
+    fail('$home_automounts requires $directory_source == "AD"')
   }
 
   if (($join_domain == undef) and ($directory_source == "AD")) {
