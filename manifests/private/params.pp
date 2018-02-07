@@ -68,9 +68,11 @@ class epfl_sso::private::params {
   case $::osfamily {
     "Debian": {
       $autofs_deps = ["autofs", "autofs-ldap"]
+      $autofs_service = "autofs"
     }
     "RedHat": {
       $autofs_deps = ["autofs"]
+      $autofs_service = "autofs"
     }
   }
 

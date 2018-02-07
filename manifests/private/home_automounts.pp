@@ -8,6 +8,7 @@
 
 class epfl_sso::private::home_automounts(
   $autofs_deps                = $::epfl_sso::private::params::autofs_deps,
+  $autofs_service             = $::epfl_sso::private::params::autofs_service,
   $krb5_domain                = $::epfl_sso::private::params::krb5_domain,
   $ad_server_urls             = $::epfl_sso::private::params::ad_server_urls,
   $ad_server_base_dn          = $::epfl_sso::private::params::ad_server_base_dn,
@@ -15,6 +16,11 @@ class epfl_sso::private::home_automounts(
   $autofs_ldap_auth_conf_path = $::epfl_sso::private::params::autofs_ldap_auth_conf_path
 ) inherits epfl_sso::private::params {
   ensure_packages($autofs_deps)
+  Package[$autofs_deps] ->
+  service { $autofs_service:
+    ensure => "running",
+    enable => true
+  }
 
   # [Durrer], p. 45
   file { $autofs_conf_path:
