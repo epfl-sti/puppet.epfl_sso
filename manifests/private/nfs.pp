@@ -19,6 +19,12 @@
 #   mechanism are installed and configured (in /etc/idmapd.conf)
 #
 # * Ensure that rpc.idmapd is *not* running
+#
+# === Bibliography:
+#
+# [Durrer] "Configuration AD NFSv4 Client Ubuntu 16.04-16.10 sur AD de
+# Prod et Automap Home mode LDAP", L. Durrer,
+# https://sico.epfl.ch:8443/pages/viewpage.action?spaceKey=SIAC&title=IDEVING
   
 class epfl_sso::private::nfs(
   $server_ensure = "present",
@@ -67,12 +73,22 @@ class epfl_sso::private::nfs(
   ########### ID-mapping configuration
   $idmapd_conf_file = "/etc/idmapd.conf"
 
+  # [Durrer] p. 8
   ini_setting { "[General] Domain in ${idmapd_conf_file}":
     ensure  => $client_ensure,
     path    => $idmapd_conf_file,
     section => "General",
     setting => "Domain",
     value   => $krb5_domain,
+  }
+
+  # Ibid (even though this is the default behavior)
+  ini_setting { "[Translation] Method in ${idmapd_conf_file}":
+    ensure  => $client_ensure,
+    path    => $idmapd_conf_file,
+    section => "Translation",
+    setting => "Method",
+    value   => "nsswitch"
   }
 
   if ($client_ensure == "present") {
