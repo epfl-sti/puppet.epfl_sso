@@ -9,6 +9,7 @@ class epfl_sso::private::sss(
   $directory_source,
   $ad_server,
   $ad_server_base_dn,
+  $ad_automount_home,
   $debug_sssd,
   $manage_nsswitch_netgroup
 ) inherits epfl_sso::private::params {
@@ -19,7 +20,7 @@ class epfl_sso::private::sss(
     ensure  => present,
     content => template('epfl_sso/sssd.conf.erb'),
     # The template above uses variables $debug_sssd, $auth_source,
-    # $ad_server and $ad_server_base_dn
+    # $ad_server, $ad_server_base_dn and $ad_automount_home
     owner   => root,
     group   => root,
     mode    => '0600'

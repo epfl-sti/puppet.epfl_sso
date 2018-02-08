@@ -30,6 +30,7 @@ class epfl_sso::private::init_linux(
     directory_source         => $directory_source,
     ad_server                => $ad_server,
     ad_server_base_dn        => $ad_server_base_dn,
+    ad_automount_home        => $ad_automount_home,
     debug_sssd               => $debug_sssd,
     manage_nsswitch_netgroup => $manage_nsswitch_netgroup
   }
