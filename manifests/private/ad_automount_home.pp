@@ -66,7 +66,8 @@ See autofs_ldap_auth.conf(5) for more information.
   exec { "wait for sssd to serve the automount maps":
     path => $::path,
     command => "true ; for time in $(seq 1 120); do if /usr/sbin/automount -m 2>&1 |grep setautomntent; then sleep 1; else exit 0; fi; done; exit 1",
-    subscribe => Exec["epfl_sso-msktutil"]
+    subscribe => Exec["epfl_sso-msktutil"],
+    refreshonly => true
   } ~>
   Service["autofs"]
 
