@@ -17,6 +17,8 @@
 #
 # === Actions:
 #
+# * Set GSSAPIAuthentication to 'yes' in /etc/ssh/ssh_config
+#
 class epfl_sso::private::sshd(
   $enable_gssapi = true
 ) {

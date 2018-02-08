@@ -49,8 +49,6 @@
 #
 # * Create EPFL-compatible /etc/krb5.conf
 #
-# * Set GSSAPIAuthentication to 'yes' in /etc/ssh/ssh_config
-#
 # * Deploy pam_krb5.so in an "opportunistic" configuration: grab a TGT
 #   if we can, but fail gracefully otherwise
 #
