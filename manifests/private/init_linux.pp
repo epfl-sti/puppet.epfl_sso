@@ -25,25 +25,14 @@ class epfl_sso::private::init_linux(
     class { "epfl_sso::private::lightdm":  }
   }
 
-  package { $epfl_sso::private::params::sssd_packages :
-    ensure => present
-  } ->
-  file { '/etc/sssd/sssd.conf' :
-    ensure  => present,
-    content => template('epfl_sso/sssd.conf.erb'),
-    # The template above uses variables $debug_sssd, $auth_source,
-    # $ad_server and $ad_server_base_dn
-    owner   => root,
-    group   => root,
-    mode    => '0600'
-  } ~>
-  service { 'sssd':
-    ensure => running,
-    enable => true
+  class { "epfl_sso::private::sss":
+    auth_source              => $auth_source,
+    directory_source         => $directory_source,
+    ad_server                => $ad_server,
+    ad_server_base_dn        => $ad_server_base_dn,
+    debug_sssd               => $debug_sssd,
+    manage_nsswitch_netgroup => $manage_nsswitch_netgroup
   }
-
-  include epfl_sso::private::pam
-  epfl_sso::private::pam::module { "sss": }
 
   if ($needs_nscd) {
     package { "nscd":
@@ -58,23 +47,6 @@ class epfl_sso::private::init_linux(
     class { 'epfl_sso::private::access':
       directory_source         => $directory_source,
       allowed_users_and_groups => $allowed_users_and_groups
-    }
-  }
-
-  name_service {['passwd', 'group']:
-    lookup => ['compat', 'sss']
-  }
-
-  # This is necessary for RH7 and CentOS 7, and probably
-  # does not hurt for older versions:
-  name_service { 'initgroups':
-    # https://bugzilla.redhat.com/show_bug.cgi?id=751450
-    lookup => ['files [SUCCESS=continue] sss']
-  }
-
-  if ($manage_nsswitch_netgroup) {
-    name_service { 'netgroup':
-      lookup => ['files', 'sss']
     }
   }
 

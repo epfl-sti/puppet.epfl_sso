@@ -19,6 +19,9 @@ class epfl_sso::private::params {
          }
   }
 
+  # The files that should be deleted upon restarting sssd
+  $sssd_cleanup_globs = "/var/lib/sss/db/*"
+
   case $::osfamily {
     'Debian': {
       $pam_modules_managed_by_distro = ["krb5", "mkhomedir", "sss", "winbind" ]
