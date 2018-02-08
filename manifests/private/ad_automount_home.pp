@@ -18,12 +18,14 @@ class epfl_sso::private::ad_automount_home(
   ensure_packages($autofs_deps)
   Package[$autofs_deps] ->
   service { $autofs_service:
-    ensure => "running",
-    enable => true
+    ensure    => "running",
+    enable    => true,
+    subscribe => Service["sssd"]
   }
 
   # [Durrer], p. 45
   file { $autofs_conf_path:
+    notify  => Service[$autofs_service],
     content => inline_template('# Managed by Puppet, DO NOT EDIT.
 timeout = 300
 dismount_interval = 300
@@ -40,6 +42,7 @@ auth_conf_file = "<%= @autofs_ldap_auth_conf_path %>"
 
   # [Durrer], p. 45
   file { $autofs_ldap_auth_conf_path:
+    notify  => Service[$autofs_service],
     content => inline_template('
 <?xml version="1.0" ?>
 <!--
