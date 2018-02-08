@@ -146,12 +146,22 @@ class epfl_sso::private::ad(
 
         $_msktutil_create_command = inline_template("msktutil ${_msktutil_verbose} -c --server <%= @ad_server %> -b '<%= @join_domain %>' --no-reverse-lookups --enctypes 24 --computer-name <%= @hostname.upcase %> --service host/<%= @fqdn.downcase %> <%= @_set_samba_secret_flag %>")
         $_msktutil_renew_command = inline_template("msktutil ${_msktutil_verbose} --auto-update --enctypes 24 --computer-name <%= @hostname.upcase %> <%= @_set_samba_secret_flag %>")
+
+        # This command is a dependency of other steps (e.g. restarting autofs), so
+        # it cannot be allowed to silently succeed (i.e. avoid too much magic in the
+        # "unless")
         exec { $_msktutil_create_command:
           path => $::path,
-          command => "/bin/echo 'msktutil -c failed - Please run kinit <ADSciper or \"itvdi-ad-YOURSCHOOL\"> first'; false",
-          unless => $_msktutil_renew_command,
+          command => "true ; if ${_msktutil_create_command}; then exit 0; else echo >&2 'Be sure to run kinit <ADSciper or \"itvdi-ad-YOURSCHOOL\"> first'; exit 1; fi",
+          unless => "klist -ke |grep -q host/${::fqdn}",
           require => [Package["msktutil"], File["/etc/krb5.conf"]],
           alias => "epfl_sso-msktutil"
+        } ->
+        # Run the update command silently, just so that Puppet can alert
+        # in case of trouble:
+        exec { $_msktutil_renew_command:
+          path => $::path,
+          unless => $_msktutil_renew_command
         }
 
         if ($renew_domain_credentials and
