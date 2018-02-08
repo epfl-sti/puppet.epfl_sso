@@ -150,7 +150,8 @@ class epfl_sso::private::ad(
           path => $::path,
           command => "/bin/echo 'msktutil -c failed - Please run kinit <ADSciper or \"itvdi-ad-YOURSCHOOL\"> first'; false",
           unless => $_msktutil_renew_command,
-          require => [Package["msktutil"], File["/etc/krb5.conf"]]
+          require => [Package["msktutil"], File["/etc/krb5.conf"]],
+          alias => "epfl_sso-msktutil"
         }
 
         if ($renew_domain_credentials and
