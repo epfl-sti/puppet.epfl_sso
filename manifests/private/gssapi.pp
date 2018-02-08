@@ -18,8 +18,8 @@ class epfl_sso::private::gssapi(
   # the client or server will request a session key from the KDC and
   # needs to know the exact identity of its communicating party in
   # order to do so successfully.
-  if (($ensure == "fixed-ip") and ($::fqdn_ip != $::ipaddress)) {
-    fail("Resolved IP address for ${::fqdn} is ${fqdn_ip}; expected ${ipaddress}")
+  if (($ensure == "fixed-ip") and (! $::fqdn_resolves_to_us)) {
+    fail("Resolved IP address for ${::fqdn} is ${fqdn_ip}, which doesn't appear to be ours")
   }
 
   # There is no opting out of these checks.
