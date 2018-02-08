@@ -70,7 +70,7 @@ See autofs_ldap_auth.conf(5) for more information.
   file { "/etc/systemd/system/autofs.service.d/wait-for-sssd.conf":
     content => inline_template('# Managed by Puppet, DO NOT EDIT
 [Service]
-ExecStartPre=/bin/bash -c "for time in $(seq 1 60); do if /usr/sbin/automount -m 2>&1 |grep -q setautomntent; then sleep 1; else exit 0; fi; done; exit 1"
+ExecStartPre=/bin/bash -c "for time in $(seq 1 60); do if /usr/sbin/automount -m 2>&1 |grep setautomntent; then sleep 1; else exit 0; fi; done; exit 1"
 ')
   } ~>
   exec { "systemctl daemon-reload # for autofs systemd config changes":
