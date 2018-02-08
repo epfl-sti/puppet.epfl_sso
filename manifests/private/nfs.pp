@@ -26,10 +26,11 @@
 # https://sico.epfl.ch:8443/pages/viewpage.action?spaceKey=SIAC&title=IDEVING
   
 class epfl_sso::private::nfs(
-  $server_ensure = "present",
-  $client_ensure = "present",
-  $debug_gssd = false,
-  $krb5_domain = $::epfl_sso::private::params::krb5_domain
+  $server_ensure            = "present",
+  $client_ensure            = "present",
+  $debug_gssd               = false,
+  $krb5_domain              = $::epfl_sso::private::params::krb5_domain,
+  $defaults_nfs_common_path = $::epfl_sso::private::params::defaults_nfs_common_path
 ) inherits epfl_sso::private::params {
 
   ########### rpc.gssd configuration
@@ -38,8 +39,15 @@ class epfl_sso::private::nfs(
 
   if ($::operatingsystem == "Ubuntu" and
       $::operatingsystemrelease >= "16.04") {
-    file_line { "NEED_GSSD in /etc/default/nfs-common":
-      path => "/etc/default/nfs-common",
+    file { $defaults_nfs_common_path:
+      ensure  => 'present',
+      replace => 'no', # Don't purge the file if already there
+      content => "",
+      mode    => '0644',
+    }
+
+    file_line { "NEED_GSSD in ${defaults_nfs_common_path}":
+      path => $defaults_nfs_common_path,
       ensure => present,
       line => $client_ensure ? {
         "present" => "NEED_GSSD=yes",
@@ -66,8 +74,8 @@ Environment="GSSDARGS=-r -r -r -v -v -v"
       } else {
         $_gssdargs_ensure = "absent"
       }
-      file_line { "RPCGSSDARGS in /etc/default/nfs-common":
-        path => "/etc/default/nfs-common",
+      file_line { "RPCGSSDARGS in ${defaults_nfs_common_path}":
+        path => $defaults_nfs_common_path,
         line => $_gssdargs_ensure ? {
           "present" => "RPCGSSDARGS='-r -r -r -v -v -v'",
           default   => "RPCGSSDARGS="

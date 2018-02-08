@@ -49,6 +49,8 @@ class epfl_sso::private::params {
 
   $ad_server_base_dn = "DC=intranet,DC=epfl,DC=ch"
 
+  $defaults_nfs_common_path = "/etc/default/nfs-common"
+
   case $::osfamily {
     "Debian": {
       $rpc_gssd_package = "nfs-common"
