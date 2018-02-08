@@ -1,6 +1,6 @@
 {
   "name": "epflsti/epfl_sso",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": "stiitops@groupes.epfl.ch",
   "summary": "UNIX single sign-on using EPFL's LDAP and Kerberos servers",
   "license": "MIT",
