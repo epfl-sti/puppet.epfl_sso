@@ -61,30 +61,30 @@ See autofs_ldap_auth.conf(5) for more information.
     lookup => ['files', 'sss']
   } ~> Service["autofs"]
 
-  # After granting a ticket, sssd can take a very long time to start serving
-  # the automount maps:
-  exec { "wait for sssd to serve the automount maps":
-    path => $::path,
-    command => "true ; for time in $(seq 1 120); do if /usr/sbin/automount -m 2>&1 |grep setautomntent; then sleep 1; else exit 0; fi; done; exit 1",
-    subscribe => Exec["epfl_sso-msktutil"],
-    refreshonly => true
-  } ~>
-  Service["autofs"]
-
   # Work around https://bugs.launchpad.net/ubuntu/+source/sssd/+bug/1566508
   # on systemd-capable systems; wait for sssd to be able to answer "automount -m"
-  # before running autofs for real.
+  # before running autofs. Do this at boot time:
+  $_wait_automounts_visible_snippet = "if /usr/sbin/automount -m 2>&1 |grep setautomntent; then sleep 1; else exit 0; fi"
   file { "/etc/systemd/system/autofs.service.d":
     ensure => "directory"
   } ->
   file { "/etc/systemd/system/autofs.service.d/wait-for-sssd.conf":
     content => inline_template('# Managed by Puppet, DO NOT EDIT
 [Service]
-ExecStartPre=/bin/bash -c "for time in $(seq 1 10); do if /usr/sbin/automount -m 2>&1 |grep setautomntent; then sleep 1; else exit 0; fi; done; exit 1"
+ExecStartPre=/bin/bash -c "for time in $(seq 1 10); do <%= @_wait_automounts_visible_snippet %>; done; exit 1"
 ')
   } ~>
   exec { "systemctl daemon-reload # for autofs systemd config changes":
     path => $::path,
+    refreshonly => true
+  } ~>
+  Service["autofs"]
+
+  # Also, with a longer timeout, after msktutil succeeds:
+  exec { "restart sssd and wait for it to serve the automount maps":
+    path => $::path,
+    command => "service sssd restart ; for time in $(seq 1 120); do ${_wait_automounts_visible_snippet} ; done; exit 1",
+    subscribe => Exec["epfl_sso-msktutil"],
     refreshonly => true
   } ~>
   Service["autofs"]
