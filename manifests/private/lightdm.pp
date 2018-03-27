@@ -14,7 +14,7 @@ class epfl_sso::private::lightdm {
 # /etc/ppet/modules/epfl_sso/manifests/init.pp
 #
 [Seat:*]
-greeter-ow-manual-login=true
+greeter-show-manual-login=true
 ")
         }~>service { "lightdm" :
           ensure => running # Restart lightdm if the 50-show-manual-login.conf file changes
