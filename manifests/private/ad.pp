@@ -73,7 +73,7 @@ class epfl_sso::private::ad(
   $join_domain,
   $manage_ldap_conf = true,
   $manage_samba_secrets = $epfl_sso::private::params::manage_samba_secrets,
-  $epflca_cert_url = 'http://certauth.epfl.ch/epflca.cer',
+  $epflca_cert_url = 'https://certauth.epfl.ch/epflca.cer',
   $renew_domain_credentials = true,
 ) inherits epfl_sso::private::params {
   # Kerberos servers who would like to identify their peer using a
