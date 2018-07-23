@@ -11,11 +11,23 @@ class epfl_sso::private::access(
   $directory_source,
   $allowed_users_and_groups = '',
   ) {
+    $_allowed_users_and_groups_2 = $allowed_users_and_groups ? {
+      /\wgdm\w/  => $allowed_users_and_groups,
+      default    => $::osfamily ? {
+        "Debian"  => "gdm $allowed_users_and_groups",
+        default   => $allowed_users_and_groups
+      }
+    }
+    $_allowed_users_and_groups = $directory_source ? {
+      "scoldap" => $_allowed_users_and_groups_2.downcase,
+      default   => $_allowed_users_and_groups_2
+    }
+  fail($_allowed_users_and_groups)
   file { '/etc/security/access.conf':
     ensure  => present,
     content => inline_template('# This file is managed with Puppet.
 
-- : ALL EXCEPT root <%= @directory_source == "scoldap" ? @allowed_users_and_groups.downcase : @allowed_users_and_groups %> : ALL
+- : ALL EXCEPT root <%= @_allowed_users_and_groups %> : ALL
 '),
     owner   => root,
     group   => root,
