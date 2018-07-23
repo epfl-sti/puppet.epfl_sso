@@ -148,7 +148,7 @@ class epfl_sso(
         allowed_users_and_groups => $allowed_users_and_groups,
         manage_nsswitch_netgroup => $manage_nsswitch_netgroup,
         enable_mkhomedir         => $_do_enable_mkhomedir,
-        ad_automount_home          => $ad_automount_home,
+        ad_automount_home        => $ad_automount_home,
         auth_source              => $auth_source,
         directory_source         => $directory_source,
         needs_nscd               => $needs_nscd,
